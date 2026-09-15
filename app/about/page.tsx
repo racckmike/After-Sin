@@ -34,8 +34,8 @@ export default function AboutPage() {
 
         <p className="mb-6 text-[15px] leading-relaxed text-charcoal">
           That idea shapes the product, not just the copy. Every AFTER SIN piece is
-          built to a standard first and a world — DARK, CORE, RACING, whatever
-          comes after those — second. The worlds will keep changing. The standard
+          built to a standard first and a world — DARK, CORE, whatever comes
+          after those — second. The worlds will keep changing. The standard
           won&rsquo;t.
         </p>
 

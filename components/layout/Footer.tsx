@@ -9,7 +9,6 @@ const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
       { label: "All Products", href: "/shop" },
       { label: "AFTER SIN DARK", href: "/collections/dark" },
       { label: "AFTER SIN CORE", href: "/collections/core" },
-      { label: "AFTER SIN RACING", href: "/collections/racing" },
     ],
   },
   {

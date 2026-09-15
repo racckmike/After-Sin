@@ -133,7 +133,7 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
 
             {hasQuery && !hasResults && (
               <p className="text-sm text-charcoal">
-                No results for &ldquo;{query}&rdquo;. Try a world — CORE, DARK, RACING.
+                No results for &ldquo;{query}&rdquo;. Try a world — CORE, DARK.
               </p>
             )}
 

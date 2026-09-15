@@ -3,8 +3,9 @@ import type { Collection } from "@/lib/types";
 /**
  * "Worlds" are the architecture placeholders described in the brief —
  * NOT necessarily final customer-facing category names. Only DARK has
- * a product in development; CORE and RACING exist so the navigation
- * and template system are proven out ahead of real product.
+ * a product in development; CORE exists so the navigation and template
+ * system are proven out ahead of real product. RACING is pulled for
+ * now — no real product or photography for it yet.
  */
 export const collections: Collection[] = [
   {
@@ -23,15 +24,6 @@ export const collections: Collection[] = [
     tagline: "Essentials",
     description:
       "Clean, studio-focused basics built on the same fit and construction standard as every other world.",
-    status: "coming-soon",
-  },
-  {
-    slug: "racing",
-    world: "racing",
-    name: "AFTER SIN RACING",
-    tagline: "Technical",
-    description:
-      "Motorsport-informed technical pieces. Structure first, graphics second.",
     status: "coming-soon",
   },
 ];
