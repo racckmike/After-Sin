@@ -72,11 +72,14 @@ export function Footer() {
           <div className="flex items-center gap-6">
             <CurrencySelector tone="dark" />
             <div className="flex items-center gap-4">
-              <a href="#" aria-label="Instagram" className="eyebrow hover:opacity-60">
+              <a
+                href="https://instagram.com/aftersin.world"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="eyebrow hover:opacity-60"
+              >
                 Instagram
-              </a>
-              <a href="#" aria-label="TikTok" className="eyebrow hover:opacity-60">
-                TikTok
               </a>
             </div>
           </div>
