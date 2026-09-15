@@ -116,18 +116,4 @@ body {
       transparent 14px
     );
   }
-  .placeholder-frame::after {
-    content: attr(data-label);
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    opacity: 0.45;
-    white-space: nowrap;
-    pointer-events: none;
-  }
 }
