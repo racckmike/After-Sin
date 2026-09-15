@@ -6,12 +6,14 @@ import { products } from "@/data/products";
 import { collections } from "@/data/collections";
 import { formatPrice } from "@/lib/format";
 import { PlaceholderFrame } from "@/components/ui/PlaceholderFrame";
+import { useRegion } from "@/context/RegionContext";
 
 const RECENT_KEY = "after-sin:recent-searches";
 
 export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [query, setQuery] = useState("");
   const [recent, setRecent] = useState<string[]>([]);
+  const { region } = useRegion();
 
   useEffect(() => {
     if (!open) return;
@@ -157,7 +159,7 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
                             <span>
                               <span className="block text-sm">{p.name}</span>
                               <span className="block text-xs text-charcoal">
-                                {formatPrice(p.price, "CAD")}
+                                {formatPrice(p.price, region.currency)}
                               </span>
                             </span>
                           </Link>

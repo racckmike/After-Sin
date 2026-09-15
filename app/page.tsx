@@ -6,9 +6,9 @@ import { Newsletter } from "@/components/editorial/Newsletter";
 import { CollectionGateway } from "@/components/editorial/CollectionGateway";
 import { PlaceholderFrame } from "@/components/ui/PlaceholderFrame";
 import { SignatureMark } from "@/components/ui/SignatureMark";
+import { RegionPrice } from "@/components/commerce/RegionPrice";
 import { collections } from "@/data/collections";
 import { getProduct } from "@/data/products";
-import { formatPrice } from "@/lib/format";
 
 export default function Home() {
   const hero = getProduct("drop-001-full-zip-hoodie")!;
@@ -64,7 +64,7 @@ export default function Home() {
             {hero.summary}
           </p>
           <div className="flex shrink-0 items-center gap-6">
-            <span className="font-display text-xl">{formatPrice(hero.price, "CAD")}</span>
+            <RegionPrice amountCAD={hero.price} className="font-display text-xl" />
             <Link
               href={`/product/${hero.slug}`}
               className="flex h-12 items-center bg-off-black px-7 text-sm tracking-[0.08em] text-bone transition-opacity hover:opacity-85"
