@@ -96,6 +96,10 @@ export default function Home() {
         body="AFTER SIN is interested in what happens after — after decisions, after mistakes, after the version of yourself you used to defend. The product is built around that idea; the campaigns will be too."
         href="/editorial"
         linkLabel="Read the story"
+        image={{
+          src: "/products/drop-001-full-zip-hoodie/oxblood-detail.jpg",
+          alt: "AFTER SIN Drop 001 full-zip hoodie, Oxblood colorway, thorn print detail",
+        }}
       />
 
       {/* BRAND STATEMENT */}
