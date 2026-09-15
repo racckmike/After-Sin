@@ -6,7 +6,7 @@ import { ShopControls } from "@/components/commerce/ShopControls";
 import { PlaceholderFrame } from "@/components/ui/PlaceholderFrame";
 
 const collectionCampaignImage: Record<string, string> = {
-  dark: "/products/drop-001-full-zip-hoodie/duo-campaign.png",
+  dark: "/products/drop-001-full-zip-hoodie/trio-campaign.jpg",
 };
 
 export function generateStaticParams() {

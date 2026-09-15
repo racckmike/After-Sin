@@ -5,7 +5,7 @@ export function Hero() {
   return (
     <section className="on-dark relative flex h-[92vh] min-h-[560px] w-full items-end bg-off-black text-bone">
       <Image
-        src="/products/drop-001-full-zip-hoodie/duo-campaign.png"
+        src="/products/drop-001-full-zip-hoodie/duo-campaign.jpg"
         alt="AFTER SIN Drop 001 — Consequence, Ash and Oxblood full-zip hoodies"
         fill
         priority
