@@ -22,8 +22,8 @@ export function Logo({
       <Image
         src={src}
         alt="AFTER SIN"
-        width={1041}
-        height={448}
+        width={1150}
+        height={582}
         priority={priority}
         className="h-auto w-[132px] md:w-[150px]"
       />

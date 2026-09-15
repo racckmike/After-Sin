@@ -21,8 +21,8 @@ export function SignatureMark({
       src={src}
       alt=""
       aria-hidden
-      width={122}
-      height={143}
+      width={617}
+      height={956}
       className={className}
       style={{ width: size, height: "auto" }}
     />
