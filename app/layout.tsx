@@ -8,8 +8,21 @@ import { RegionProvider } from "@/context/RegionContext";
 import { SiteChrome } from "@/components/layout/SiteChrome";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.aftersin.shop"),
   title: "AFTER SIN",
   description: "AFTER SIN — premium contemporary streetwear. Toronto.",
+  openGraph: {
+    title: "AFTER SIN",
+    description: "AFTER SIN — premium contemporary streetwear. Toronto.",
+    url: "https://www.aftersin.shop",
+    siteName: "AFTER SIN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AFTER SIN",
+    description: "AFTER SIN — premium contemporary streetwear. Toronto.",
+  },
 };
 
 export default function RootLayout({
