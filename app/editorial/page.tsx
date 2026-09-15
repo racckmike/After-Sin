@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { editorialEntries } from "@/data/editorial";
 import { PlaceholderFrame } from "@/components/ui/PlaceholderFrame";
 
@@ -17,11 +18,23 @@ export default function EditorialIndex() {
       <div className="mt-12 grid gap-8 md:grid-cols-3">
         {editorialEntries.map((entry) => (
           <Link key={entry.slug} href={`/editorial/${entry.slug}`} className="group flex flex-col">
-            <PlaceholderFrame
-              label={`${entry.title.toUpperCase()} — PLACEHOLDER`}
-              ratio="4 / 5"
-              tone="dark"
-            />
+            {entry.thumbnail ? (
+              <div className="relative overflow-hidden bg-charcoal" style={{ aspectRatio: "4 / 5" }}>
+                <Image
+                  src={entry.thumbnail.src}
+                  alt={entry.thumbnail.alt}
+                  fill
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                />
+              </div>
+            ) : (
+              <PlaceholderFrame
+                label={`${entry.title.toUpperCase()} — PLACEHOLDER`}
+                ratio="4 / 5"
+                tone="dark"
+              />
+            )}
             <p className="eyebrow mt-4 text-charcoal">{entry.type}</p>
             <p className="mt-1 font-display text-xl">{entry.title}</p>
             <p className="mt-1 text-sm text-charcoal">{entry.excerpt}</p>

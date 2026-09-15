@@ -53,4 +53,6 @@ export interface Collection {
   tagline: string;
   description: string;
   status: "live" | "coming-soon";
+  /** campaign image for the Shop by World gateway tile — falls back to the placeholder frame when absent */
+  image?: { src: string; alt: string };
 }
