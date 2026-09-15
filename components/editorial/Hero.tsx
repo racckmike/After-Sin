@@ -16,7 +16,9 @@ export function Hero() {
       <div className="relative z-10 mx-auto w-full max-w-[1600px] px-4 pb-14 md:px-8 md:pb-20">
         <p className="eyebrow text-soft-grey">Drop 001 — Consequence</p>
         <h1 className="mt-3 max-w-[16ch] font-display text-[13vw] leading-[0.95] md:text-[6.2vw]">
-          [Collection title — not locked]
+          The First
+          <br />
+          Consequence
         </h1>
         <div className="mt-8 flex items-center gap-6">
           <Link
