@@ -18,3 +18,17 @@ export function formatPrice(amountCAD: number, currency: "CAD" | "MXN" = "CAD") 
     minimumFractionDigits: converted % 1 === 0 ? 0 : 2,
   }).format(converted);
 }
+
+/**
+ * No price is locked until a product is actually available — showing a
+ * number next to a "coming soon" item reads as a real price. Swap it for
+ * the status word instead; everything else still formats normally.
+ */
+export function priceOrStatus(
+  amountCAD: number,
+  currency: "CAD" | "MXN",
+  status: "in-stock" | "low-stock" | "sold-out" | "coming-soon"
+) {
+  if (status === "coming-soon") return "Coming Soon";
+  return formatPrice(amountCAD, currency);
+}

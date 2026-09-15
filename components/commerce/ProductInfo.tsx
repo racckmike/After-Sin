@@ -6,7 +6,7 @@ import { SizeSelector } from "@/components/commerce/SizeSelector";
 import { Accordion } from "@/components/ui/Accordion";
 import { useCart } from "@/context/CartContext";
 import { useRegion } from "@/context/RegionContext";
-import { formatPrice } from "@/lib/format";
+import { priceOrStatus } from "@/lib/format";
 
 interface Props {
   product: Product;
@@ -29,11 +29,11 @@ export function ProductInfo({ product, color, onColorChange }: Props) {
     <div className="flex flex-col">
       <p className="eyebrow text-charcoal">AFTER SIN {product.world.toUpperCase()}</p>
       <h1 className="mt-2 font-display text-3xl md:text-4xl">{product.name}</h1>
-      <p className="mt-3 text-lg">{formatPrice(product.price, region.currency)}</p>
+      <p className="mt-3 text-lg">{priceOrStatus(product.price, region.currency, product.status)}</p>
 
-      {(soldOut || comingSoon || product.status === "low-stock") && (
+      {(soldOut || product.status === "low-stock") && (
         <p className="eyebrow mt-3 text-charcoal">
-          {soldOut ? "Sold Out" : comingSoon ? "Coming Soon" : "Low Stock"}
+          {soldOut ? "Sold Out" : "Low Stock"}
         </p>
       )}
 

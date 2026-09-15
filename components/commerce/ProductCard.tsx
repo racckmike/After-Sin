@@ -7,7 +7,7 @@ import type { Product, ProductImage } from "@/lib/types";
 import { PlaceholderFrame } from "@/components/ui/PlaceholderFrame";
 import { StatusBadge } from "@/components/commerce/StatusBadge";
 import { useRegion } from "@/context/RegionContext";
-import { formatPrice } from "@/lib/format";
+import { priceOrStatus } from "@/lib/format";
 
 function CardFrame({ image, className = "" }: { image: ProductImage; className?: string }) {
   if (image.src) {
@@ -57,8 +57,8 @@ export function ProductCard({ product }: { product: Product }) {
           </p>
         </div>
         <div className="flex flex-col items-end gap-0.5">
-          <span className="text-sm">{formatPrice(product.price, region.currency)}</span>
-          <StatusBadge status={product.status} />
+          <span className="text-sm">{priceOrStatus(product.price, region.currency, product.status)}</span>
+          {product.status !== "coming-soon" && <StatusBadge status={product.status} />}
         </div>
       </div>
     </Link>
