@@ -11,7 +11,7 @@ export const collections: Collection[] = [
     slug: "dark",
     world: "dark",
     name: "AFTER SIN DARK",
-    tagline: "Drop 001",
+    tagline: "Drop 001 — Consequence",
     description:
       "Washed black, antique hardware, gothic-influenced graphic language. The first world to ship.",
     status: "live",

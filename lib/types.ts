@@ -19,6 +19,10 @@ export interface ProductImage {
   alt: string;
   /** label shown on the placeholder frame until real photography exists */
   placeholderLabel: string;
+  /** path under /public — when present, real photography renders instead of the placeholder frame */
+  src?: string;
+  /** ties this image to one ProductColor's name, for galleries that filter by selected color */
+  color?: string;
 }
 
 export interface Product {

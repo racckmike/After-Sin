@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import { products, getProduct } from "@/data/products";
-import { ProductGallery } from "@/components/commerce/ProductGallery";
-import { ProductInfo } from "@/components/commerce/ProductInfo";
+import { ProductDisplay } from "@/components/commerce/ProductDisplay";
 import { ProductGrid } from "@/components/commerce/ProductGrid";
 
 export function generateStaticParams() {
@@ -24,10 +23,7 @@ export default async function ProductPage({
   return (
     <div className="mx-auto max-w-[1600px] px-4 py-10 md:px-8 md:py-14">
       <div className="grid gap-10 md:grid-cols-[1.5fr_1fr] md:gap-14 lg:grid-cols-[1.7fr_1fr]">
-        <ProductGallery images={product.images} />
-        <div className="md:sticky md:top-24 md:self-start">
-          <ProductInfo product={product} />
-        </div>
+        <ProductDisplay product={product} />
       </div>
 
       {related.length > 0 && (

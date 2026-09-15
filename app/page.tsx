@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Hero } from "@/components/editorial/Hero";
 import { EditorialSection } from "@/components/editorial/EditorialSection";
 import { Newsletter } from "@/components/editorial/Newsletter";
@@ -20,7 +21,7 @@ export default function Home() {
       <section className="mx-auto max-w-[1600px] px-4 py-20 md:px-8 md:py-28">
         <div className="mb-10 flex items-end justify-between border-b hairline pb-5">
           <div>
-            <p className="eyebrow text-charcoal">Drop 001</p>
+            <p className="eyebrow text-charcoal">Drop 001 — Consequence</p>
             <h2 className="mt-2 font-display text-3xl md:text-4xl">
               AFTER SIN — Full-Zip Hoodie
             </h2>
@@ -31,14 +32,30 @@ export default function Home() {
         </div>
 
         <div className="grid gap-4 md:grid-cols-[1.3fr_1fr] md:gap-6">
-          <PlaceholderFrame
-            label={hero.images[0].placeholderLabel}
-            ratio="4 / 5"
-            tone="dark"
-          />
+          {hero.images[0].src ? (
+            <div className="relative overflow-hidden bg-charcoal" style={{ aspectRatio: "4 / 5" }}>
+              <Image
+                src={hero.images[0].src}
+                alt={hero.images[0].alt}
+                fill
+                sizes="(min-width: 768px) 55vw, 100vw"
+                className="object-cover"
+                priority
+              />
+            </div>
+          ) : (
+            <PlaceholderFrame label={hero.images[0].placeholderLabel} ratio="4 / 5" tone="dark" />
+          )}
           <div className="grid grid-cols-2 gap-4 md:grid-rows-2 md:gap-6">
-            <PlaceholderFrame label={hero.images[2]?.placeholderLabel ?? ""} ratio="1 / 1" tone="dark" />
-            <PlaceholderFrame label={hero.images[3]?.placeholderLabel ?? ""} ratio="1 / 1" tone="dark" />
+            {[hero.images[2], hero.images[3]].map((img, i) =>
+              img?.src ? (
+                <div key={img.id} className="relative overflow-hidden bg-charcoal" style={{ aspectRatio: "1 / 1" }}>
+                  <Image src={img.src} alt={img.alt} fill sizes="27vw" className="object-cover" />
+                </div>
+              ) : (
+                <PlaceholderFrame key={img?.id ?? i} label={img?.placeholderLabel ?? ""} ratio="1 / 1" tone="dark" />
+              )
+            )}
           </div>
         </div>
 

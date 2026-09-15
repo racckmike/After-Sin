@@ -8,8 +8,13 @@ import { useCart } from "@/context/CartContext";
 import { useRegion } from "@/context/RegionContext";
 import { formatPrice } from "@/lib/format";
 
-export function ProductInfo({ product }: { product: Product }) {
-  const [color, setColor] = useState(product.colors[0]?.name ?? "");
+interface Props {
+  product: Product;
+  color: string;
+  onColorChange: (color: string) => void;
+}
+
+export function ProductInfo({ product, color, onColorChange }: Props) {
   const [size, setSize] = useState<string | null>(null);
   const [notifyEmail, setNotifyEmail] = useState("");
   const [notified, setNotified] = useState(false);
@@ -39,7 +44,7 @@ export function ProductInfo({ product }: { product: Product }) {
             <button
               key={c.name}
               type="button"
-              onClick={() => setColor(c.name)}
+              onClick={() => onColorChange(c.name)}
               aria-label={c.name}
               aria-pressed={color === c.name}
               className={`h-8 w-8 rounded-full border-2 transition-shadow ${

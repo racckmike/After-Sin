@@ -1,12 +1,26 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
-import type { Product } from "@/lib/types";
+import type { Product, ProductImage } from "@/lib/types";
 import { PlaceholderFrame } from "@/components/ui/PlaceholderFrame";
 import { StatusBadge } from "@/components/commerce/StatusBadge";
 import { useRegion } from "@/context/RegionContext";
 import { formatPrice } from "@/lib/format";
+
+function CardFrame({ image, className = "" }: { image: ProductImage; className?: string }) {
+  if (image.src) {
+    return (
+      <div className={`aspect-[4/5] overflow-hidden bg-soft-grey/30 ${className}`}>
+        <div className="relative h-full w-full">
+          <Image src={image.src} alt={image.alt} fill sizes="(min-width: 768px) 33vw, 50vw" className="object-cover" />
+        </div>
+      </div>
+    );
+  }
+  return <PlaceholderFrame label={image.placeholderLabel} ratio="4 / 5" className={className} />;
+}
 
 export function ProductCard({ product }: { product: Product }) {
   const [hover, setHover] = useState(false);
@@ -21,14 +35,12 @@ export function ProductCard({ product }: { product: Product }) {
       onMouseLeave={() => setHover(false)}
     >
       <div className="relative overflow-hidden">
-        <PlaceholderFrame
-          label={product.images[0].placeholderLabel}
-          ratio="4 / 5"
+        <CardFrame
+          image={product.images[0]}
           className={`transition-opacity duration-300 ${hover ? "opacity-0" : "opacity-100"}`}
         />
-        <PlaceholderFrame
-          label={secondaryImage.placeholderLabel}
-          ratio="4 / 5"
+        <CardFrame
+          image={secondaryImage}
           className={`absolute inset-0 transition-opacity duration-300 ${
             hover ? "opacity-100" : "opacity-0"
           }`}
