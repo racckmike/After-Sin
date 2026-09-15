@@ -7,11 +7,13 @@ import { CollectionGateway } from "@/components/editorial/CollectionGateway";
 import { PlaceholderFrame } from "@/components/ui/PlaceholderFrame";
 import { SignatureMark } from "@/components/ui/SignatureMark";
 import { RegionPrice } from "@/components/commerce/RegionPrice";
+import { ProductGrid } from "@/components/commerce/ProductGrid";
 import { collections } from "@/data/collections";
-import { getProduct } from "@/data/products";
+import { getProduct, getProductsByCollection } from "@/data/products";
 
 export default function Home() {
   const hero = getProduct("drop-001-full-zip-hoodie")!;
+  const dropProducts = getProductsByCollection("dark");
 
   return (
     <>
@@ -72,6 +74,22 @@ export default function Home() {
               VIEW PRODUCT
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* SHOP THE DROP */}
+      <section className="border-t hairline px-4 py-20 md:px-8 md:py-28">
+        <div className="mx-auto max-w-[1600px]">
+          <div className="mb-10 flex items-end justify-between border-b hairline pb-5">
+            <div>
+              <p className="eyebrow text-charcoal">Drop 001 — Consequence</p>
+              <h2 className="mt-2 font-display text-3xl md:text-4xl">Shop the Drop</h2>
+            </div>
+            <Link href="/collections/dark" className="eyebrow hidden underline underline-offset-4 md:inline">
+              Shop All
+            </Link>
+          </div>
+          <ProductGrid products={dropProducts} />
         </div>
       </section>
 
