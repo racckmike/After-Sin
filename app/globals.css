@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+/*
+  AFTER SIN — design tokens
+  Colors are DIRECTIONAL per brand brief, not permanently locked.
+  Collection-specific accents (e.g. RACING) are applied via
+  [data-collection] overrides further down, never here.
+*/
+:root {
+  --color-off-black: #080808;
+  --color-washed-black: #111111;
+  --color-charcoal: #242424;
+  --color-bone: #f1efe8;
+  --color-off-white: #f7f6f2;
+  --color-soft-grey: #aaa7a0;
+  --color-antique-silver: #8c8982;
+  --color-white: #ffffff;
+
+  /* semantic surface tokens — components should read these, not raw colors */
+  --surface-light: var(--color-bone);
+  --surface-dark: var(--color-off-black);
+  --ink-on-light: var(--color-off-black);
+  --ink-on-dark: var(--color-bone);
+  --ink-muted-on-light: var(--color-charcoal);
+  --ink-muted-on-dark: var(--color-soft-grey);
+  --hairline-on-light: color-mix(in srgb, var(--color-off-black) 14%, transparent);
+  --hairline-on-dark: color-mix(in srgb, var(--color-bone) 18%, transparent);
+
+  /* collection accent — neutral by default; a collection page may override */
+  --accent: var(--color-off-black);
+}
+
+@theme inline {
+  --color-off-black: var(--color-off-black);
+  --color-washed-black: var(--color-washed-black);
+  --color-charcoal: var(--color-charcoal);
+  --color-bone: var(--color-bone);
+  --color-off-white: var(--color-off-white);
+  --color-soft-grey: var(--color-soft-grey);
+  --color-antique-silver: var(--color-antique-silver);
+
+  --font-display: "Bodoni Moda Variable", Georgia, "Times New Roman", serif;
+  --font-sans: "Archivo Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --breakpoint-xs: 22.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-bone);
+  color: var(--color-off-black);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-off-black);
+  color: var(--color-bone);
+}
+
+/* visible focus state everywhere — accessibility requirement, never remove */
+:focus-visible {
+  outline: 2px solid var(--color-off-black);
+  outline-offset: 3px;
+}
+.on-dark :focus-visible {
+  outline-color: var(--color-bone);
+}
+
+/*
+  These custom rules live in Tailwind's `components` layer (not unlayered
+  CSS) specifically so utility classes always win over them regardless of
+  source order — e.g. an `absolute` class on a .placeholder-frame element
+  must beat this layer's own `position: relative`, and a `bg-charcoal`
+  class must beat this layer's own background. Unlayered CSS in v4 always
+  outranks any `@layer`, which silently broke both of those overrides
+  before this was introduced.
+*/
+@layer components {
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .hairline {
+    border-color: var(--hairline-on-light);
+  }
+  .on-dark .hairline {
+    border-color: var(--hairline-on-dark);
+  }
+
+  /* placeholder campaign imagery — honest, labeled, no fake photography */
+  .placeholder-frame {
+    position: relative;
+    overflow: hidden;
+    background-image: repeating-linear-gradient(
+      135deg,
+      color-mix(in srgb, currentColor 6%, transparent) 0px,
+      color-mix(in srgb, currentColor 6%, transparent) 1px,
+      transparent 1px,
+      transparent 14px
+    );
+  }
+  .placeholder-frame::after {
+    content: attr(data-label);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.45;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+}
