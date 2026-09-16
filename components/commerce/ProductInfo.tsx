@@ -71,7 +71,7 @@ export function ProductInfo({ product, color, onColorChange }: Props) {
         {comingSoon ? (
           notified ? (
             <p className="eyebrow flex h-12 items-center justify-center border border-off-black">
-              We&rsquo;ll email you
+              You&rsquo;re on the waitlist
             </p>
           ) : (
             <>
@@ -101,7 +101,7 @@ export function ProductInfo({ product, color, onColorChange }: Props) {
                 }}
               >
                 <label htmlFor="notify-email" className="sr-only">
-                  Email for notification
+                  Email for waitlist
                 </label>
                 <input
                   id="notify-email"
@@ -118,7 +118,7 @@ export function ProductInfo({ product, color, onColorChange }: Props) {
                   disabled={submitting}
                   className="eyebrow px-5 transition-opacity hover:opacity-60 disabled:opacity-40"
                 >
-                  {submitting ? "…" : "NOTIFY ME"}
+                  {submitting ? "…" : "JOIN WAITLIST"}
                 </button>
               </form>
               {notifyError && <p className="eyebrow mt-2 text-red-800">{notifyError}</p>}
