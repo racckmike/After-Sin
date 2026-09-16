@@ -18,6 +18,8 @@ export function ProductInfo({ product, color, onColorChange }: Props) {
   const [size, setSize] = useState<string | null>(null);
   const [notifyEmail, setNotifyEmail] = useState("");
   const [notified, setNotified] = useState(false);
+  const [notifyError, setNotifyError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
   const { addItem, openCart } = useCart();
   const { region } = useRegion();
 
@@ -72,29 +74,55 @@ export function ProductInfo({ product, color, onColorChange }: Props) {
               We&rsquo;ll email you
             </p>
           ) : (
-            <form
-              className="flex h-12 items-stretch border border-off-black"
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (notifyEmail) setNotified(true);
-              }}
-            >
-              <label htmlFor="notify-email" className="sr-only">
-                Email for notification
-              </label>
-              <input
-                id="notify-email"
-                type="email"
-                required
-                placeholder="EMAIL"
-                value={notifyEmail}
-                onChange={(e) => setNotifyEmail(e.target.value)}
-                className="eyebrow flex-1 bg-transparent px-4 placeholder:text-charcoal/50 focus:outline-none"
-              />
-              <button type="submit" className="eyebrow px-5 transition-opacity hover:opacity-60">
-                NOTIFY ME
-              </button>
-            </form>
+            <>
+              <form
+                className="flex h-12 items-stretch border border-off-black"
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  if (!notifyEmail || submitting) return;
+                  setSubmitting(true);
+                  setNotifyError(null);
+                  try {
+                    const res = await fetch("/api/waitlist", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ email: notifyEmail, productSlug: product.slug }),
+                    });
+                    if (!res.ok) {
+                      const data = await res.json().catch(() => null);
+                      throw new Error(data?.error ?? "Something went wrong");
+                    }
+                    setNotified(true);
+                  } catch (err) {
+                    setNotifyError(err instanceof Error ? err.message : "Something went wrong");
+                  } finally {
+                    setSubmitting(false);
+                  }
+                }}
+              >
+                <label htmlFor="notify-email" className="sr-only">
+                  Email for notification
+                </label>
+                <input
+                  id="notify-email"
+                  type="email"
+                  required
+                  placeholder="EMAIL"
+                  value={notifyEmail}
+                  onChange={(e) => setNotifyEmail(e.target.value)}
+                  disabled={submitting}
+                  className="eyebrow flex-1 bg-transparent px-4 placeholder:text-charcoal/50 focus:outline-none disabled:opacity-60"
+                />
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="eyebrow px-5 transition-opacity hover:opacity-60 disabled:opacity-40"
+                >
+                  {submitting ? "…" : "NOTIFY ME"}
+                </button>
+              </form>
+              {notifyError && <p className="eyebrow mt-2 text-red-800">{notifyError}</p>}
+            </>
           )
         ) : (
           <button

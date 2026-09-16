@@ -6,6 +6,8 @@ import { SignatureMark } from "@/components/ui/SignatureMark";
 export function Newsletter() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
   return (
     <section className="on-dark bg-off-black px-4 py-20 text-bone md:px-8 md:py-28">
@@ -21,29 +23,55 @@ export function Newsletter() {
         {submitted ? (
           <p className="eyebrow mt-8">You&rsquo;re on the list.</p>
         ) : (
-          <form
-            className="mt-8 flex w-full max-w-[380px] items-stretch border-b border-bone/40"
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (email) setSubmitted(true);
-            }}
-          >
-            <label htmlFor="newsletter-email" className="sr-only">
-              Email
-            </label>
-            <input
-              id="newsletter-email"
-              type="email"
-              required
-              placeholder="EMAIL"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="eyebrow flex-1 bg-transparent py-3 placeholder:text-soft-grey/70 focus:outline-none"
-            />
-            <button type="submit" className="eyebrow px-2 transition-opacity hover:opacity-60">
-              JOIN
-            </button>
-          </form>
+          <>
+            <form
+              className="mt-8 flex w-full max-w-[380px] items-stretch border-b border-bone/40"
+              onSubmit={async (e) => {
+                e.preventDefault();
+                if (!email || submitting) return;
+                setSubmitting(true);
+                setError(null);
+                try {
+                  const res = await fetch("/api/waitlist", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email }),
+                  });
+                  if (!res.ok) {
+                    const data = await res.json().catch(() => null);
+                    throw new Error(data?.error ?? "Something went wrong");
+                  }
+                  setSubmitted(true);
+                } catch (err) {
+                  setError(err instanceof Error ? err.message : "Something went wrong");
+                } finally {
+                  setSubmitting(false);
+                }
+              }}
+            >
+              <label htmlFor="newsletter-email" className="sr-only">
+                Email
+              </label>
+              <input
+                id="newsletter-email"
+                type="email"
+                required
+                placeholder="EMAIL"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={submitting}
+                className="eyebrow flex-1 bg-transparent py-3 placeholder:text-soft-grey/70 focus:outline-none disabled:opacity-60"
+              />
+              <button
+                type="submit"
+                disabled={submitting}
+                className="eyebrow px-2 transition-opacity hover:opacity-60 disabled:opacity-40"
+              >
+                {submitting ? "…" : "JOIN"}
+              </button>
+            </form>
+            {error && <p className="eyebrow mt-2 text-red-400">{error}</p>}
+          </>
         )}
       </div>
     </section>
