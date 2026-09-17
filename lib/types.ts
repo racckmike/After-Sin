@@ -33,6 +33,8 @@ export interface Product {
   /** PLACEHOLDER — directional price, not a locked retail figure */
   price: number;
   currency: "CAD";
+  /** real, locked MXN retail price — takes precedence over the CAD-converted price when set */
+  priceMXN?: number;
   colors: ProductColor[];
   sizes: string[];
   soldOutSizes?: string[];

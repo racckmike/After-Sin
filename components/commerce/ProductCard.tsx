@@ -7,7 +7,7 @@ import type { Product, ProductImage } from "@/lib/types";
 import { PlaceholderFrame } from "@/components/ui/PlaceholderFrame";
 import { StatusBadge } from "@/components/commerce/StatusBadge";
 import { useRegion } from "@/context/RegionContext";
-import { priceOrStatus } from "@/lib/format";
+import { getProductPrice } from "@/lib/format";
 
 function CardFrame({ image, className = "" }: { image: ProductImage; className?: string }) {
   if (image.src) {
@@ -26,6 +26,10 @@ export function ProductCard({ product }: { product: Product }) {
   const [hover, setHover] = useState(false);
   const { region } = useRegion();
   const secondaryImage = product.images[1] ?? product.images[0];
+  // a locked MXN price already says the number; only skip the badge when the
+  // price line itself is standing in for "coming soon"
+  const priceIsLocked = region.currency === "MXN" && product.priceMXN != null;
+  const showBadge = product.status !== "in-stock" && !(product.status === "coming-soon" && priceIsLocked);
 
   return (
     <Link
@@ -57,8 +61,8 @@ export function ProductCard({ product }: { product: Product }) {
           </p>
         </div>
         <div className="flex flex-col items-end gap-0.5">
-          <span className="text-sm">{priceOrStatus(product.price, region.currency, product.status)}</span>
-          {product.status !== "coming-soon" && <StatusBadge status={product.status} />}
+          <span className="text-sm">{getProductPrice(product, region.currency)}</span>
+          {showBadge && <StatusBadge status={product.status} />}
         </div>
       </div>
     </Link>

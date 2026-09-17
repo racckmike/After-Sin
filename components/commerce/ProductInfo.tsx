@@ -6,7 +6,7 @@ import { SizeSelector } from "@/components/commerce/SizeSelector";
 import { Accordion } from "@/components/ui/Accordion";
 import { useCart } from "@/context/CartContext";
 import { useRegion } from "@/context/RegionContext";
-import { priceOrStatus } from "@/lib/format";
+import { getProductPrice } from "@/lib/format";
 
 interface Props {
   product: Product;
@@ -26,16 +26,19 @@ export function ProductInfo({ product, color, onColorChange }: Props) {
   const soldOut = product.status === "sold-out";
   const comingSoon = product.status === "coming-soon";
   const canAdd = !soldOut && !comingSoon && size !== null;
+  // a locked MXN price shows the number instead of the word "coming soon",
+  // so that status needs to surface separately in that case
+  const priceIsLocked = region.currency === "MXN" && product.priceMXN != null;
 
   return (
     <div className="flex flex-col">
       <p className="eyebrow text-charcoal">AFTER SIN {product.world.toUpperCase()}</p>
       <h1 className="mt-2 font-display text-3xl md:text-4xl">{product.name}</h1>
-      <p className="mt-3 text-lg">{priceOrStatus(product.price, region.currency, product.status)}</p>
+      <p className="mt-3 text-lg">{getProductPrice(product, region.currency)}</p>
 
-      {(soldOut || product.status === "low-stock") && (
+      {(soldOut || product.status === "low-stock" || (comingSoon && priceIsLocked)) && (
         <p className="eyebrow mt-3 text-charcoal">
-          {soldOut ? "Sold Out" : "Low Stock"}
+          {soldOut ? "Sold Out" : comingSoon ? "Coming Soon" : "Low Stock"}
         </p>
       )}
 

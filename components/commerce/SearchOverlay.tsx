@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { products } from "@/data/products";
 import { collections } from "@/data/collections";
-import { priceOrStatus } from "@/lib/format";
+import { getProductPrice } from "@/lib/format";
 import { PlaceholderFrame } from "@/components/ui/PlaceholderFrame";
 import { useRegion } from "@/context/RegionContext";
 
@@ -159,7 +159,7 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
                             <span>
                               <span className="block text-sm">{p.name}</span>
                               <span className="block text-xs text-charcoal">
-                                {priceOrStatus(p.price, region.currency, p.status)}
+                                {getProductPrice(p, region.currency)}
                               </span>
                             </span>
                           </Link>

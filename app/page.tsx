@@ -66,7 +66,12 @@ export default function Home() {
             {hero.summary}
           </p>
           <div className="flex shrink-0 items-center gap-6">
-            <RegionPrice amountCAD={hero.price} status={hero.status} className="font-display text-xl" />
+            <RegionPrice
+              amountCAD={hero.price}
+              amountMXN={hero.priceMXN}
+              status={hero.status}
+              className="font-display text-xl"
+            />
             <Link
               href={`/product/${hero.slug}`}
               className="flex h-12 items-center bg-off-black px-7 text-sm tracking-[0.08em] text-bone transition-opacity hover:opacity-85"
