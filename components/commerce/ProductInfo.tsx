@@ -26,9 +26,9 @@ export function ProductInfo({ product, color, onColorChange }: Props) {
   const soldOut = product.status === "sold-out";
   const comingSoon = product.status === "coming-soon";
   const canAdd = !soldOut && !comingSoon && size !== null;
-  // a locked MXN price shows the number instead of the word "coming soon",
-  // so that status needs to surface separately in that case
-  const priceIsLocked = region.currency === "MXN" && product.priceMXN != null;
+  // a locked MXN price shows a real number in both currencies instead of
+  // the word "coming soon", so that status needs to surface separately
+  const priceIsLocked = product.priceMXN != null;
 
   return (
     <div className="flex flex-col">

@@ -26,9 +26,10 @@ export function ProductCard({ product }: { product: Product }) {
   const [hover, setHover] = useState(false);
   const { region } = useRegion();
   const secondaryImage = product.images[1] ?? product.images[0];
-  // a locked MXN price already says the number; only skip the badge when the
-  // price line itself is standing in for "coming soon"
-  const priceIsLocked = region.currency === "MXN" && product.priceMXN != null;
+  // a locked MXN price shows a real number in both currencies (CAD via
+  // conversion); only skip the badge when the price line itself is
+  // standing in for "coming soon"
+  const priceIsLocked = product.priceMXN != null;
   const showBadge = product.status !== "in-stock" && !(product.status === "coming-soon" && priceIsLocked);
 
   return (

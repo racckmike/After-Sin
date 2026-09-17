@@ -1,11 +1,11 @@
 import type { StockStatus } from "@/lib/types";
 
 /**
- * All product prices are stored in CAD (see Product.price). This is a
- * static, directional rate — not a live feed — consistent with pricing
- * elsewhere in the app being marked PLACEHOLDER/NOT LOCKED. Swap for a
- * real FX source when MXN pricing is locked (or once every product has
- * a real priceMXN and this fallback is no longer needed).
+ * Directional, static rate — not a live feed. Used two ways: (1) to
+ * convert the CAD placeholder price for products with no real price
+ * locked yet, and (2) to derive a CAD figure from a product's real,
+ * locked priceMXN once that exists (MXN is the anchor in that case,
+ * converted back to CAD — see getProductPrice).
  */
 const CAD_EXCHANGE_RATES: Record<"CAD" | "MXN", number> = {
   CAD: 1,
@@ -27,19 +27,21 @@ export function formatPrice(amountCAD: number, currency: "CAD" | "MXN" = "CAD") 
 
 /**
  * The price to display for a product in the given currency:
- * - a real, locked priceMXN always wins when viewing in MXN, even if the
- *   product's overall status is still "coming soon" — the price and the
- *   availability are separate facts.
- * - otherwise, no price is locked until the product is actually
- *   available, so "coming soon" shows the status word instead of a
- *   CAD-converted number that reads as a real price.
+ * - once a real priceMXN is locked, it's the anchor for both
+ *   currencies — shown as-is in MXN, and converted to CAD via the
+ *   directional rate — even if the product's overall status is still
+ *   "coming soon" (price and availability are separate facts).
+ * - otherwise, no price is locked yet, so "coming soon" shows the
+ *   status word instead of the CAD placeholder formatted as if it
+ *   were a real number.
  */
 export function getProductPrice(
   product: { price: number; priceMXN?: number; status: StockStatus },
   currency: "CAD" | "MXN"
 ) {
-  if (currency === "MXN" && product.priceMXN != null) {
-    return formatAmount(product.priceMXN, "MXN");
+  if (product.priceMXN != null) {
+    if (currency === "MXN") return formatAmount(product.priceMXN, "MXN");
+    return formatAmount(product.priceMXN / CAD_EXCHANGE_RATES.MXN, "CAD");
   }
   if (product.status === "coming-soon") return "Coming Soon";
   return formatPrice(product.price, currency);
