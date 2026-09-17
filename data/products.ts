@@ -17,7 +17,6 @@ export const products: Product[] = [
     collectionSlug: "dark",
     price: 189,
     currency: "CAD",
-    priceMXN: 1250,
     colors: [
       { name: "Ash", swatch: "#9a9a96" },
       { name: "Oxblood", swatch: "#5c2430" },
@@ -97,7 +96,6 @@ export const products: Product[] = [
     collectionSlug: "dark",
     price: 149,
     currency: "CAD",
-    priceMXN: 850,
     colors: [
       { name: "Black", swatch: "#171717" },
       { name: "Bone", swatch: "#e4ddd0" },
