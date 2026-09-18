@@ -1,34 +1,32 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Hero } from "@/components/editorial/Hero";
 import { EditorialSection } from "@/components/editorial/EditorialSection";
 import { Newsletter } from "@/components/editorial/Newsletter";
 import { CollectionGateway } from "@/components/editorial/CollectionGateway";
-import { PlaceholderFrame } from "@/components/ui/PlaceholderFrame";
 import { SignatureMark } from "@/components/ui/SignatureMark";
 import { Reveal } from "@/components/ui/Reveal";
-import { RegionPrice } from "@/components/commerce/RegionPrice";
-import { ProductGrid } from "@/components/commerce/ProductGrid";
+import { ProductCard } from "@/components/commerce/ProductCard";
 import { collections } from "@/data/collections";
-import { getProduct, getProductsByCollection } from "@/data/products";
+import { getProductsByCollection } from "@/data/products";
 
 export default function Home() {
-  const hero = getProduct("drop-001-full-zip-hoodie")!;
   const dropProducts = getProductsByCollection("dark");
 
   return (
     <>
       <Hero />
 
-      {/* DROP 001 — hero product. The loudest moment on the page after the
-          hero itself: oversized display type, tight image crop, generous
-          top space so it reads as a statement, not a listing header. */}
+      {/* DROP 001 — product discovery. The loudest moment on the page after
+          the hero itself: a real display heading introduces the drop, then
+          the garments themselves — large, few, unboxed — carry the section.
+          This is a teaser into the collection, not a product explainer;
+          full front/back/detail/hardware imagery lives on each PDP. */}
       <section className="mx-auto max-w-[1600px] px-4 pb-20 pt-24 md:px-8 md:pb-28 md:pt-36">
         <Reveal className="mb-12 flex flex-col gap-4 border-b hairline pb-6 md:mb-16 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="eyebrow text-charcoal">Drop 001 — Consequence</p>
-            <h2 className="mt-3 font-display text-[13vw] leading-[0.95] md:text-6xl lg:text-7xl">
-              Full-Zip Hoodie
+            <h2 className="mt-3 font-display text-[11vw] leading-[0.95] md:text-6xl lg:text-7xl">
+              Explore the Collection
             </h2>
           </div>
           <Link href="/shop" className="eyebrow underline underline-offset-4">
@@ -36,72 +34,12 @@ export default function Home() {
           </Link>
         </Reveal>
 
-        <div className="grid gap-4 md:grid-cols-[1.4fr_1fr] md:gap-6">
-          {hero.images[0].src ? (
-            <div className="group relative overflow-hidden bg-charcoal" style={{ aspectRatio: "4 / 5" }}>
-              <Image
-                src={hero.images[0].src}
-                alt={hero.images[0].alt}
-                fill
-                sizes="(min-width: 768px) 58vw, 100vw"
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-                priority
-              />
-            </div>
-          ) : (
-            <PlaceholderFrame label={hero.images[0].placeholderLabel} ratio="4 / 5" tone="dark" />
-          )}
-          <div className="grid grid-cols-2 gap-4 md:grid-rows-2 md:gap-6">
-            {[hero.images[2], hero.images[3]].map((img, i) =>
-              img?.src ? (
-                <div key={img.id} className="group relative overflow-hidden bg-charcoal" style={{ aspectRatio: "1 / 1" }}>
-                  <Image
-                    src={img.src}
-                    alt={img.alt}
-                    fill
-                    sizes="27vw"
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-                  />
-                </div>
-              ) : (
-                <PlaceholderFrame key={img?.id ?? i} label={img?.placeholderLabel ?? ""} ratio="1 / 1" tone="dark" />
-              )
-            )}
-          </div>
-        </div>
-
-        <Reveal className="mt-8 flex flex-col items-start justify-between gap-6 border-t hairline pt-6 md:flex-row md:items-center">
-          <p className="max-w-[58ch] text-[15px] leading-relaxed text-charcoal">
-            {hero.summary}
-          </p>
-          <div className="flex shrink-0 items-center gap-6">
-            <RegionPrice
-              amountCAD={hero.price}
-              amountMXN={hero.priceMXN}
-              status={hero.status}
-              className="font-display text-xl"
-            />
-            <Link
-              href={`/product/${hero.slug}`}
-              className="flex h-12 items-center bg-off-black px-7 text-sm tracking-[0.08em] text-bone transition-all duration-200 hover:opacity-85 active:scale-[0.97]"
-            >
-              VIEW PRODUCT
-            </Link>
-          </div>
-        </Reveal>
-      </section>
-
-      {/* SHOP THE DROP — deliberately quieter/more functional than the
-          moments around it: this is a utility grid, not a statement. */}
-      <section className="border-t hairline px-4 py-16 md:px-8 md:py-20">
-        <div className="mx-auto max-w-[1600px]">
-          <Reveal className="mb-10 flex items-end justify-between">
-            <h2 className="eyebrow text-charcoal">Shop the Drop</h2>
-            <Link href="/collections/dark" className="eyebrow hidden underline underline-offset-4 md:inline">
-              Shop All
-            </Link>
-          </Reveal>
-          <ProductGrid products={dropProducts} />
+        <div className="grid gap-x-6 gap-y-12 sm:grid-cols-2 md:gap-x-10">
+          {dropProducts.map((product, i) => (
+            <Reveal key={product.slug} delay={i * 100}>
+              <ProductCard product={product} imageSizes="(min-width: 768px) 46vw, 92vw" />
+            </Reveal>
+          ))}
         </div>
       </section>
 

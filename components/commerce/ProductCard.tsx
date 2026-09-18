@@ -9,12 +9,20 @@ import { StatusBadge } from "@/components/commerce/StatusBadge";
 import { useRegion } from "@/context/RegionContext";
 import { getProductPrice } from "@/lib/format";
 
-function CardFrame({ image, className = "" }: { image: ProductImage; className?: string }) {
+function CardFrame({
+  image,
+  className = "",
+  sizes,
+}: {
+  image: ProductImage;
+  className?: string;
+  sizes: string;
+}) {
   if (image.src) {
     return (
       <div className={`aspect-[4/5] overflow-hidden bg-soft-grey/30 ${className}`}>
         <div className="relative h-full w-full">
-          <Image src={image.src} alt={image.alt} fill sizes="(min-width: 768px) 33vw, 50vw" className="object-cover" />
+          <Image src={image.src} alt={image.alt} fill sizes={sizes} className="object-cover" />
         </div>
       </div>
     );
@@ -22,7 +30,17 @@ function CardFrame({ image, className = "" }: { image: ProductImage; className?:
   return <PlaceholderFrame label={image.placeholderLabel} ratio="4 / 5" className={className} />;
 }
 
-export function ProductCard({ product }: { product: Product }) {
+export function ProductCard({
+  product,
+  imageSizes = "(min-width: 768px) 33vw, 50vw",
+}: {
+  product: Product;
+  /** Match this to the grid this card actually renders in — the default
+      assumes a 2/3/4-col catalog grid; a wider (e.g. 2-col) homepage
+      showcase should pass a wider hint so Next.js doesn't fetch an
+      undersized image for a larger slot. */
+  imageSizes?: string;
+}) {
   const [hover, setHover] = useState(false);
   const { region } = useRegion();
   const secondaryImage = product.images[1] ?? product.images[0];
@@ -51,10 +69,12 @@ export function ProductCard({ product }: { product: Product }) {
       >
         <CardFrame
           image={product.images[0]}
+          sizes={imageSizes}
           className={`transition-opacity duration-500 ${hover ? "opacity-0" : "opacity-100"}`}
         />
         <CardFrame
           image={secondaryImage}
+          sizes={imageSizes}
           className={`absolute inset-0 transition-opacity duration-500 ${
             hover ? "opacity-100" : "opacity-0"
           }`}
