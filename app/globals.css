@@ -92,6 +92,23 @@
   }
 }
 
+/* editorial-cta's label "rolls" up and out, then back in from below —
+   two chained keyframes rather than one, clipped by the label's own
+   overflow-hidden so it reads as the same word rolling past itself */
+@keyframes cta-text-out {
+  to {
+    transform: translate3d(0, -105%, 0);
+  }
+}
+@keyframes cta-text-in {
+  from {
+    transform: translate3d(0, 105%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
@@ -162,6 +179,112 @@ body {
      delay LCP the way a fade/opacity entrance would. */
   .slow-zoom {
     animation: slow-zoom 16s ease-out both;
+  }
+
+  /*
+    Editorial CTA — a solid-fill button whose fill wipes away on hover
+    to reveal a bordered, transparent state, with an independent
+    text-roll and corner marks that grow slightly. Pure CSS
+    (:hover/:focus-visible), no JS: this makes prefers-reduced-motion
+    and touch both "just work" — reduced motion already zeroes every
+    transition/animation duration above, and CSS :hover simply doesn't
+    fire the same way on touch, no special-casing needed either way.
+  */
+  .editorial-cta {
+    position: relative;
+    display: inline-flex;
+    isolation: isolate;
+  }
+  .editorial-cta__fill {
+    position: absolute;
+    inset: 0;
+    background: var(--color-off-black);
+    border: 1px solid var(--color-off-black);
+    transform-origin: 0% 50%;
+    transition: transform 0.3s cubic-bezier(0.7, 0, 0.2, 1);
+  }
+  .editorial-cta:hover .editorial-cta__fill,
+  .editorial-cta:focus-visible .editorial-cta__fill {
+    transform: scaleX(0);
+  }
+  .editorial-cta__label {
+    position: relative;
+    z-index: 2;
+    display: block;
+    overflow: hidden;
+  }
+  .editorial-cta__text {
+    display: block;
+    color: var(--color-bone);
+    transition: color 0.3s ease;
+  }
+  .editorial-cta:hover .editorial-cta__text,
+  .editorial-cta:focus-visible .editorial-cta__text {
+    color: var(--color-off-black);
+    animation:
+      cta-text-out 0.2s ease 0s 1 forwards,
+      cta-text-in 0.2s ease 0.2s 1 forwards;
+  }
+  .editorial-cta__corner {
+    position: absolute;
+    z-index: 3;
+    width: 8px;
+    height: 8px;
+    border: 0 solid var(--color-bone);
+    transition: transform 0.3s ease;
+    pointer-events: none;
+  }
+  .editorial-cta__corner--tl {
+    top: -5px;
+    left: -5px;
+    border-top-width: 1px;
+    border-left-width: 1px;
+    transform-origin: top left;
+  }
+  .editorial-cta__corner--tr {
+    top: -5px;
+    right: -5px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    transform-origin: top right;
+  }
+  .editorial-cta__corner--bl {
+    bottom: -5px;
+    left: -5px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    transform-origin: bottom left;
+  }
+  .editorial-cta__corner--br {
+    bottom: -5px;
+    right: -5px;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+    transform-origin: bottom right;
+  }
+  .editorial-cta:hover .editorial-cta__corner,
+  .editorial-cta:focus-visible .editorial-cta__corner {
+    transform: scale(1.35);
+  }
+
+  /* light tone (bone fill, off-black reveal) — the inverse of the
+     default dark tone, for CTAs sitting on dark campaign photography.
+     Wipes from the right instead of the left, mirroring how Shihiko's
+     own white-button variant anchors opposite its black one. */
+  .editorial-cta[data-tone="light"] .editorial-cta__fill {
+    background: var(--color-bone);
+    border-color: var(--color-bone);
+    transform-origin: 100% 50%;
+  }
+  .editorial-cta[data-tone="light"] .editorial-cta__text {
+    color: var(--color-off-black);
+  }
+  .editorial-cta[data-tone="light"]:hover .editorial-cta__text,
+  .editorial-cta[data-tone="light"]:focus-visible .editorial-cta__text {
+    color: var(--color-bone);
+  }
+  .editorial-cta[data-tone="light"] .editorial-cta__corner {
+    border-color: var(--color-off-black);
   }
 
   /* placeholder campaign imagery — honest, labeled, no fake photography */
