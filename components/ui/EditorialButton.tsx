@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
-import type { ComponentPropsWithoutRef, ReactNode } from "react";
+import type { ComponentPropsWithoutRef, MouseEvent, ReactNode } from "react";
+import { useTransitionLinkProps } from "@/context/PageTransitionContext";
 
 /**
  * A solid-fill CTA whose fill wipes away on hover to reveal a bordered,
@@ -36,10 +39,24 @@ export function EditorialButton({
   className = "",
   tone = "dark",
   children,
+  onClick,
   ...rest
 }: SharedProps & { href: string } & Omit<ComponentPropsWithoutRef<typeof Link>, "href" | "className" | "children">) {
+  // Real world/collection navigation — routes through the cover→reveal
+  // transition (see context/PageTransitionContext.tsx). Modifier-clicks,
+  // middle-click, and right-click all fall through untouched.
+  const transitionProps = useTransitionLinkProps(href);
   return (
-    <Link href={href} data-tone={tone} className={`editorial-cta ${className}`} {...rest}>
+    <Link
+      href={href}
+      data-tone={tone}
+      className={`editorial-cta ${className}`}
+      onClick={(e: MouseEvent<HTMLAnchorElement>) => {
+        onClick?.(e);
+        transitionProps.onClick(e);
+      }}
+      {...rest}
+    >
       <span className="editorial-cta__fill" aria-hidden />
       <CornerMarks />
       <span className="editorial-cta__label flex h-full w-full items-center justify-center px-7">

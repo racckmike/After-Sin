@@ -5,7 +5,9 @@ import "@fontsource-variable/jetbrains-mono/wght.css";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import { RegionProvider } from "@/context/RegionContext";
+import { PageTransitionProvider } from "@/context/PageTransitionContext";
 import { SiteChrome } from "@/components/layout/SiteChrome";
+import { TransitionOverlay } from "@/components/layout/TransitionOverlay";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.aftersin.shop"),
@@ -41,7 +43,10 @@ export default function RootLayout({
         </a>
         <RegionProvider>
           <CartProvider>
-            <SiteChrome>{children}</SiteChrome>
+            <PageTransitionProvider>
+              <SiteChrome>{children}</SiteChrome>
+              <TransitionOverlay />
+            </PageTransitionProvider>
           </CartProvider>
         </RegionProvider>
       </body>

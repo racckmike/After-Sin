@@ -1,14 +1,20 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import type { Collection } from "@/lib/types";
 import { PlaceholderFrame } from "@/components/ui/PlaceholderFrame";
+import { useTransitionLinkProps } from "@/context/PageTransitionContext";
 
 export function CollectionGateway({ collection }: { collection: Collection }) {
+  const href = `/collections/${collection.slug}`;
+  const transitionProps = useTransitionLinkProps(href);
   return (
     <Link
-      href={`/collections/${collection.slug}`}
+      href={href}
       data-collection={collection.slug}
       className="group relative flex flex-col overflow-hidden"
+      {...transitionProps}
     >
       <div className="on-dark relative overflow-hidden bg-charcoal" style={{ aspectRatio: "3 / 4" }}>
         {collection.image ? (
