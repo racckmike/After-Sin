@@ -42,14 +42,14 @@ export function AccountDashboard({
       <p className="eyebrow text-charcoal">Account</p>
       <h1 className="mt-2 font-display text-3xl md:text-4xl">Welcome, {firstName}</h1>
 
-      <div className="mt-10 flex items-center justify-between gap-6 overflow-x-auto border-b hairline">
-        <nav className="flex gap-7">
+      <div className="mt-10 flex flex-col gap-2 border-b hairline sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+        <nav className="flex gap-7 overflow-x-auto">
           {SECTIONS.map((s) => (
             <button
               key={s.id}
               type="button"
               onClick={() => setSection(s.id)}
-              className={`eyebrow whitespace-nowrap border-b-2 py-4 transition-colors ${
+              className={`eyebrow shrink-0 whitespace-nowrap border-b-2 py-4 transition-colors ${
                 section === s.id
                   ? "border-off-black text-off-black"
                   : "border-transparent text-charcoal hover:text-off-black"
@@ -69,7 +69,7 @@ export function AccountDashboard({
             await authClient.signOut();
             router.refresh();
           }}
-          className="eyebrow shrink-0 whitespace-nowrap py-4 text-charcoal underline underline-offset-4 hover:text-off-black disabled:opacity-40"
+          className="eyebrow shrink-0 self-start whitespace-nowrap pb-3 text-charcoal underline underline-offset-4 hover:text-off-black disabled:opacity-40 sm:self-auto sm:py-4"
         >
           {signingOut ? "…" : "Log Out"}
         </button>
