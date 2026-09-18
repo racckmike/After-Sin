@@ -10,7 +10,7 @@ export function CurrencySelector({ tone = "light" }: { tone?: "light" | "dark" }
       <select
         value={region.code}
         onChange={(e) => setRegion(e.target.value as "CA" | "MX")}
-        className={`eyebrow cursor-pointer appearance-none bg-transparent pr-1 outline-none ${
+        className={`eyebrow min-w-[7.5rem] cursor-pointer appearance-none bg-transparent pr-1 outline-none ${
           tone === "dark" ? "text-bone" : "text-off-black"
         }`}
       >
