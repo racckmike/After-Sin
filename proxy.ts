@@ -32,6 +32,7 @@ const SKIP_ROUTES = [
   "/account",
   "/admin",
   "/api/waitlist",
+  "/api/webhooks",
   "/cart",
   "/collections",
   "/contact",
