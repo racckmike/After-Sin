@@ -1,14 +1,24 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useRegion } from "@/context/RegionContext";
-import { formatPrice } from "@/lib/format";
+import { formatAmount, getProductPriceValue } from "@/lib/format";
 import { PlaceholderFrame } from "@/components/ui/PlaceholderFrame";
 
 export default function CartPage() {
-  const { lines, removeItem, updateQuantity, subtotal } = useCart();
+  const { lines, removeItem, updateQuantity } = useCart();
   const { region } = useRegion();
+  const router = useRouter();
+
+  // The real, locked MXN price (once set) takes precedence over the CAD
+  // placeholder everywhere — this must match checkout exactly, since the
+  // server computes the authoritative total from the same source
+  // (lib/checkout/pricing.ts), not from anything sent by this page.
+  const lineTotal = (line: (typeof lines)[number]) =>
+    (getProductPriceValue(line.product, region.currency) ?? 0) * line.quantity;
+  const subtotal = lines.reduce((sum, l) => sum + lineTotal(l), 0);
 
   if (lines.length === 0) {
     return (
@@ -42,9 +52,7 @@ export default function CartPage() {
                       {line.color} · Size {line.size}
                     </p>
                   </div>
-                  <p className="text-sm">
-                    {formatPrice(line.product.price * line.quantity, region.currency)}
-                  </p>
+                  <p className="text-sm">{formatAmount(lineTotal(line), region.currency)}</p>
                 </div>
                 <div className="mt-auto flex items-center gap-4 pt-4">
                   <div className="flex items-center border hairline">
@@ -85,14 +93,21 @@ export default function CartPage() {
           <h2 className="eyebrow mb-5">Summary</h2>
           <div className="flex items-center justify-between text-sm">
             <span>Subtotal</span>
-            <span>{formatPrice(subtotal, region.currency)}</span>
+            <span>{formatAmount(subtotal, region.currency)}</span>
           </div>
           <p className="mt-2 text-xs text-charcoal">
             Shipping and taxes calculated at checkout.
           </p>
+          {region.code !== "MX" && (
+            <p className="mt-2 text-xs text-charcoal">
+              Checkout is only available for Mexico right now.
+            </p>
+          )}
           <button
             type="button"
-            className="mt-6 flex h-12 w-full items-center justify-center bg-off-black text-sm tracking-[0.08em] text-bone transition-opacity hover:opacity-85"
+            disabled={region.code !== "MX"}
+            onClick={() => router.push("/checkout")}
+            className="mt-6 flex h-12 w-full items-center justify-center bg-off-black text-sm tracking-[0.08em] text-bone transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-40"
           >
             CHECKOUT
           </button>

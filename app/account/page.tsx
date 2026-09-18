@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getSessionSafe } from "@/lib/auth/session";
 import { getProfile, listAddresses } from "@/lib/customer/db";
+import { listOrdersForCustomer } from "@/lib/orders/db";
 import { AuthForms } from "@/components/account/AuthForms";
 import { AccountDashboard } from "@/components/account/AccountDashboard";
 
@@ -15,9 +16,10 @@ export default async function AccountPage() {
   }
 
   const { user } = session;
-  const [profile, addresses] = await Promise.all([
+  const [profile, addresses, orders] = await Promise.all([
     getProfile(user.id),
     listAddresses(user.id),
+    listOrdersForCustomer(user.id),
   ]);
 
   // Falls back to splitting Better Auth's single "name" field for a user
@@ -32,6 +34,7 @@ export default async function AccountPage() {
       firstName={firstName}
       lastName={lastName}
       addresses={addresses}
+      orders={orders}
     />
   );
 }

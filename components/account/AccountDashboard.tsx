@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth/client";
 import type { CustomerAddress } from "@/lib/customer/db";
+import type { Order } from "@/lib/orders/db";
 import { OrderHistorySection } from "@/components/account/OrderHistorySection";
 import { ProfileSection } from "@/components/account/ProfileSection";
 import { AddressesSection } from "@/components/account/AddressesSection";
@@ -27,11 +28,13 @@ export function AccountDashboard({
   firstName,
   lastName,
   addresses,
+  orders,
 }: {
   user: AccountUser;
   firstName: string;
   lastName: string;
   addresses: CustomerAddress[];
+  orders: Order[];
 }) {
   const [section, setSection] = useState<Section>("orders");
   const [signingOut, setSigningOut] = useState(false);
@@ -76,7 +79,7 @@ export function AccountDashboard({
       </div>
 
       <div className="mt-10">
-        {section === "orders" && <OrderHistorySection />}
+        {section === "orders" && <OrderHistorySection orders={orders} />}
         {section === "profile" && (
           <ProfileSection user={user} firstName={firstName} lastName={lastName} />
         )}

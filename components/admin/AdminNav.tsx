@@ -8,6 +8,7 @@ const LINKS = [
   { href: "/admin/waitlist", label: "Waitlist" },
   { href: "/admin/customers", label: "Customers" },
   { href: "/admin/orders", label: "Orders" },
+  { href: "/admin/inventory", label: "Inventory" },
   { href: "/admin/analytics", label: "Analytics" },
   { href: "/admin/settings", label: "Settings" },
 ];

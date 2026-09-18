@@ -17,13 +17,16 @@ export const products: Product[] = [
     collectionSlug: "dark",
     price: 189,
     currency: "CAD",
+    // PLACEHOLDER retail price pending the owner's real figure — see
+    // lib/checkout/pricing.ts, the sole authoritative source at checkout.
+    priceMXN: 2550,
     colors: [
       { name: "Ash", swatch: "#9a9a96" },
       { name: "Oxblood", swatch: "#5c2430" },
     ],
     sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     soldOutSizes: [],
-    status: "coming-soon",
+    status: "in-stock",
     isNew: true,
     images: [
       {

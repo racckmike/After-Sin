@@ -4,13 +4,18 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { useRegion } from "@/context/RegionContext";
-import { formatPrice } from "@/lib/format";
+import { formatAmount, getProductPriceValue } from "@/lib/format";
 import { PlaceholderFrame } from "@/components/ui/PlaceholderFrame";
 
 export function CartDrawer() {
-  const { lines, isOpen, closeCart, removeItem, updateQuantity, subtotal, count } =
-    useCart();
+  const { lines, isOpen, closeCart, removeItem, updateQuantity, count } = useCart();
   const { region } = useRegion();
+
+  // Same rule as /cart and /checkout: a locked MXN price always wins over
+  // the CAD placeholder, so this matches what checkout will actually charge.
+  const lineTotal = (line: (typeof lines)[number]) =>
+    (getProductPriceValue(line.product, region.currency) ?? 0) * line.quantity;
+  const subtotal = lines.reduce((sum, l) => sum + lineTotal(l), 0);
 
   useEffect(() => {
     if (isOpen) document.body.style.overflow = "hidden";
@@ -73,7 +78,7 @@ export function CartDrawer() {
                         </p>
                       </div>
                       <p className="text-sm">
-                        {formatPrice(line.product.price * line.quantity, region.currency)}
+                        {formatAmount(lineTotal(line), region.currency)}
                       </p>
                     </div>
                     <div className="mt-2 flex items-center gap-3">
@@ -120,7 +125,7 @@ export function CartDrawer() {
           >
             <div className="mb-4 flex items-center justify-between text-sm">
               <span>Subtotal</span>
-              <span>{formatPrice(subtotal, region.currency)}</span>
+              <span>{formatAmount(subtotal, region.currency)}</span>
             </div>
             <p className="mb-4 text-xs text-charcoal">
               Shipping and taxes calculated at checkout.

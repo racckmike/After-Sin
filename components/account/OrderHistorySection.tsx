@@ -1,32 +1,47 @@
+import Link from "next/link";
 import { SignatureMark } from "@/components/ui/SignatureMark";
+import type { Order } from "@/lib/orders/db";
+import { formatCentavosMXN } from "@/lib/checkout/pricing";
 
-/**
- * No commerce backend is wired up yet (see data/products.ts — pricing and
- * checkout aren't real). There is no order data to show, so this is an
- * honest empty state rather than a fabricated order list. The shape each
- * order will eventually need (number, date, line items with image/size/
- * color/qty, total, payment + fulfillment status, tracking) lives in this
- * comment as the contract for whoever wires up real checkout:
- *
- * interface Order {
- *   id: string;
- *   number: string;
- *   createdAt: string;
- *   items: { productSlug: string; image: string; size: string; color: string; quantity: number; price: number }[];
- *   total: number;
- *   paymentStatus: "paid" | "pending" | "refunded";
- *   fulfillmentStatus: "unfulfilled" | "shipped" | "delivered";
- *   tracking?: { carrier: string; number: string; url: string };
- * }
- */
-export function OrderHistorySection() {
+const STATUS_LABEL: Record<string, string> = {
+  paid: "Paid",
+  processing: "Processing",
+  shipped: "Shipped",
+  delivered: "Delivered",
+  cancelled: "Cancelled",
+  refunded: "Refunded",
+};
+
+export function OrderHistorySection({ orders }: { orders: Order[] }) {
+  if (orders.length === 0) {
+    return (
+      <div className="flex flex-col items-center gap-4 border-t hairline py-20 text-center">
+        <SignatureMark size={20} className="opacity-40" />
+        <p className="eyebrow text-charcoal">No Orders Yet</p>
+        <p className="max-w-[36ch] text-sm text-charcoal">Your consequences will appear here.</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col items-center gap-4 border-t hairline py-20 text-center">
-      <SignatureMark size={20} className="opacity-40" />
-      <p className="eyebrow text-charcoal">No Orders Yet</p>
-      <p className="max-w-[36ch] text-sm text-charcoal">
-        Your consequences will appear here.
-      </p>
-    </div>
+    <ul className="flex flex-col gap-4">
+      {orders.map((order) => (
+        <li key={order.id}>
+          <Link
+            href={`/account/orders/${order.orderNumber}`}
+            className="flex items-center justify-between gap-4 border hairline p-5 transition-colors hover:border-off-black"
+          >
+            <div>
+              <p className="font-display text-base">#{order.orderNumber}</p>
+              <p className="mt-1 text-xs text-charcoal">
+                {new Date(order.createdAt).toLocaleDateString()} · {STATUS_LABEL[order.status] ?? order.status}
+                {order.trackingNumber ? ` · Tracking: ${order.trackingNumber}` : ""}
+              </p>
+            </div>
+            <p className="shrink-0 text-sm">{formatCentavosMXN(order.totalCentavos)}</p>
+          </Link>
+        </li>
+      ))}
+    </ul>
   );
 }

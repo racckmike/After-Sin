@@ -12,7 +12,8 @@ const CAD_EXCHANGE_RATES: Record<"CAD" | "MXN", number> = {
   MXN: 13.5,
 };
 
-function formatAmount(amount: number, currency: "CAD" | "MXN") {
+/** Formats an amount already in the target currency — no conversion applied. */
+export function formatAmount(amount: number, currency: "CAD" | "MXN") {
   return new Intl.NumberFormat(currency === "MXN" ? "es-MX" : "en-CA", {
     style: "currency",
     currency,
@@ -23,6 +24,25 @@ function formatAmount(amount: number, currency: "CAD" | "MXN") {
 /** `amountCAD` is always the CAD source amount; it's converted to `currency` before formatting. */
 export function formatPrice(amountCAD: number, currency: "CAD" | "MXN" = "CAD") {
   return formatAmount(amountCAD * CAD_EXCHANGE_RATES[currency], currency);
+}
+
+/**
+ * The numeric price for a product in the given currency, following the
+ * same locked-priceMXN-takes-precedence rule as getProductPrice — but
+ * returning a plain number instead of a formatted string, for line-item
+ * math (cart/checkout totals) that can't sum formatted currency strings.
+ * Returns null when no price is locked and the placeholder shouldn't be
+ * treated as real (matches getProductPrice's "Coming Soon" case).
+ */
+export function getProductPriceValue(
+  product: { price: number; priceMXN?: number; status: StockStatus },
+  currency: "CAD" | "MXN"
+): number | null {
+  if (product.priceMXN != null) {
+    return currency === "MXN" ? product.priceMXN : product.priceMXN / CAD_EXCHANGE_RATES.MXN;
+  }
+  if (product.status === "coming-soon") return null;
+  return product.price * CAD_EXCHANGE_RATES[currency];
 }
 
 /**
@@ -39,10 +59,7 @@ export function getProductPrice(
   product: { price: number; priceMXN?: number; status: StockStatus },
   currency: "CAD" | "MXN"
 ) {
-  if (product.priceMXN != null) {
-    if (currency === "MXN") return formatAmount(product.priceMXN, "MXN");
-    return formatAmount(product.priceMXN / CAD_EXCHANGE_RATES.MXN, "CAD");
-  }
-  if (product.status === "coming-soon") return "Coming Soon";
-  return formatPrice(product.price, currency);
+  const value = getProductPriceValue(product, currency);
+  if (value == null) return "Coming Soon";
+  return formatAmount(value, currency);
 }

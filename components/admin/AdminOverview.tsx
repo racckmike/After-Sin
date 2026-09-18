@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { formatCentavosMXN } from "@/lib/checkout/pricing";
 
 function Metric({ label, value, note }: { label: string; value: string; note?: React.ReactNode }) {
   return (
@@ -13,11 +14,15 @@ function Metric({ label, value, note }: { label: string; value: string; note?: R
 export function AdminOverview({
   waitlistCount,
   customerCount,
+  orderStats,
+  toFulfill,
 }: {
   waitlistCount: number;
   customerCount: number;
+  orderStats: { orders: number; totalCentavos: number };
+  toFulfill: number;
 }) {
-  const pendingNote = "Pending payment integration";
+  const averageOrderValue = orderStats.orders > 0 ? Math.round(orderStats.totalCentavos / orderStats.orders) : 0;
 
   return (
     <div>
@@ -25,9 +30,17 @@ export function AdminOverview({
       <h1 className="mt-2 font-display text-3xl">Business Snapshot</h1>
 
       <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-3">
-        <Metric label="Total Sales" value="$0" note={pendingNote} />
-        <Metric label="Total Orders" value="0" note={pendingNote} />
-        <Metric label="Average Order Value" value="$0" note={pendingNote} />
+        <Metric label="Total Sales" value={formatCentavosMXN(orderStats.totalCentavos)} />
+        <Metric
+          label="Total Orders"
+          value={String(orderStats.orders)}
+          note={
+            <Link href="/admin/orders" className="underline underline-offset-4">
+              View orders
+            </Link>
+          }
+        />
+        <Metric label="Average Order Value" value={formatCentavosMXN(averageOrderValue)} />
         <Metric label="Customers" value={String(customerCount)} />
         <Metric
           label="Waitlist Members"
@@ -38,17 +51,18 @@ export function AdminOverview({
             </Link>
           }
         />
-        <Metric label="Orders To Fulfill" value="0" note={pendingNote} />
+        <Metric label="Orders To Fulfill" value={String(toFulfill)} />
       </div>
 
-      <p className="mt-10 max-w-[60ch] text-sm leading-relaxed text-charcoal">
-        Sales, order, and fulfillment numbers stay at zero until AFTER SIN has a real
-        checkout/payment integration writing orders to the database — see{" "}
-        <Link href="/admin/orders" className="underline underline-offset-4">
-          Orders
-        </Link>{" "}
-        for details on what that requires.
-      </p>
+      {orderStats.orders === 0 && (
+        <p className="mt-10 max-w-[60ch] text-sm leading-relaxed text-charcoal">
+          No paid orders yet — these numbers will update automatically once a real checkout completes. See{" "}
+          <Link href="/admin/orders" className="underline underline-offset-4">
+            Orders
+          </Link>{" "}
+          for the current test-mode status.
+        </p>
+      )}
     </div>
   );
 }
