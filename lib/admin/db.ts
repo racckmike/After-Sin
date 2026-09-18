@@ -160,6 +160,23 @@ export async function countWaitlist(): Promise<number> {
   return (rows[0] as { count: number }).count;
 }
 
+export interface WaitlistBreakdownRow {
+  productSlug: string;
+  count: number;
+}
+
+/** Real counts per product_slug, for the admin summary breakdown — never hardcoded. */
+export async function waitlistBreakdown(): Promise<WaitlistBreakdownRow[]> {
+  const sql = db();
+  const rows = await sql`
+    SELECT product_slug, count(*)::int AS count
+    FROM waitlist_signups
+    GROUP BY product_slug
+    ORDER BY count DESC, product_slug
+  `;
+  return (rows as { product_slug: string; count: number }[]).map((r) => ({ productSlug: r.product_slug, count: r.count }));
+}
+
 // ---------------------------------------------------------------------------
 // Customers (real data — neon_auth.user is Neon Auth's own managed table;
 // customer_profiles/customer_addresses are the app-owned tables from the

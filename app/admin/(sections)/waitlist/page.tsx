@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { listWaitlist, listWaitlistProductSlugs } from "@/lib/admin/db";
+import { listWaitlist, listWaitlistProductSlugs, waitlistBreakdown } from "@/lib/admin/db";
 import { WaitlistView } from "@/components/admin/WaitlistView";
 
 export const metadata: Metadata = { title: "Waitlist — AFTER SIN Admin", robots: { index: false, follow: false } };
@@ -18,9 +18,10 @@ export default async function AdminWaitlistPage({
   const sort = (params.sort as "newest" | "oldest" | "email") ?? "newest";
   const page = Math.max(1, Number(params.page) || 1);
 
-  const [{ rows, total }, productSlugs] = await Promise.all([
+  const [{ rows, total }, productSlugs, breakdown] = await Promise.all([
     listWaitlist({ search, productSlug, sort, page, pageSize: PAGE_SIZE }),
     listWaitlistProductSlugs(),
+    waitlistBreakdown(),
   ]);
 
   return (
@@ -30,6 +31,7 @@ export default async function AdminWaitlistPage({
       page={page}
       pageSize={PAGE_SIZE}
       productSlugs={productSlugs}
+      breakdown={breakdown}
       search={search}
       productSlug={productSlug}
       sort={sort}

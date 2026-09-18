@@ -9,6 +9,7 @@ import {
   logAdminAction,
 } from "@/lib/admin/db";
 import { toCsv } from "@/lib/admin/csv";
+import { getProductInterestLabel } from "@/lib/admin/productInterestLabels";
 
 export interface ActionResult {
   error?: string;
@@ -31,8 +32,8 @@ export async function exportWaitlistCsvAction(search?: string, productSlug?: str
     productSlug: productSlug || null,
   });
   return toCsv(
-    ["Email", "Product Interest", "Signup Date"],
-    rows.map((r) => [r.email, r.productSlug, r.createdAt])
+    ["Email", "Product Interest", "Product Interest Label", "Signup Date"],
+    rows.map((r) => [r.email, r.productSlug, getProductInterestLabel(r.productSlug), r.createdAt])
   );
 }
 

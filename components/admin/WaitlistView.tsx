@@ -4,7 +4,8 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useState, useTransition } from "react";
 import { ExportCsvButton } from "@/components/admin/ExportCsvButton";
 import { exportWaitlistCsvAction } from "@/lib/admin/actions";
-import type { WaitlistRow } from "@/lib/admin/db";
+import type { WaitlistRow, WaitlistBreakdownRow } from "@/lib/admin/db";
+import { getProductInterestLabel } from "@/lib/admin/productInterestLabels";
 
 export function WaitlistView({
   rows,
@@ -12,6 +13,7 @@ export function WaitlistView({
   page,
   pageSize,
   productSlugs,
+  breakdown,
   search,
   productSlug,
   sort,
@@ -21,6 +23,7 @@ export function WaitlistView({
   page: number;
   pageSize: number;
   productSlugs: string[];
+  breakdown: WaitlistBreakdownRow[];
   search: string;
   productSlug: string;
   sort: string;
@@ -56,6 +59,17 @@ export function WaitlistView({
         />
       </div>
 
+      {breakdown.length > 0 && (
+        <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+          {breakdown.map((b) => (
+            <div key={b.productSlug} className="border hairline p-4">
+              <p className="eyebrow text-charcoal">{getProductInterestLabel(b.productSlug)}</p>
+              <p className="mt-2 font-display text-2xl">{b.count}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -75,10 +89,10 @@ export function WaitlistView({
           onChange={(e) => updateParams({ product: e.target.value })}
           className="h-11 border border-off-black bg-transparent px-3 text-sm outline-none"
         >
-          <option value="">All products</option>
+          <option value="">All interests</option>
           {productSlugs.map((slug) => (
             <option key={slug} value={slug}>
-              {slug}
+              {getProductInterestLabel(slug)}
             </option>
           ))}
         </select>
@@ -109,7 +123,7 @@ export function WaitlistView({
             {rows.map((row) => (
               <tr key={row.id} className="border-b hairline">
                 <td className="py-3 pr-4">{row.email}</td>
-                <td className="py-3 pr-4 text-charcoal">{row.productSlug}</td>
+                <td className="py-3 pr-4 text-charcoal">{getProductInterestLabel(row.productSlug)}</td>
                 <td className="py-3 text-charcoal">{new Date(row.createdAt).toLocaleDateString()}</td>
               </tr>
             ))}
