@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { MagneticButton } from "@/components/ui/MagneticButton";
 
 export function Hero() {
   return (
@@ -26,12 +27,12 @@ export function Hero() {
           Consequence
         </h1>
         <div className="hero-rise mt-8 flex items-center gap-6" style={{ animationDelay: "0.4s" }}>
-          <Link
+          <MagneticButton
             href="/shop"
             className="flex h-12 items-center bg-bone px-7 text-sm tracking-[0.08em] text-off-black transition-all duration-200 hover:opacity-85 active:scale-[0.97]"
           >
             SHOP DROP
-          </Link>
+          </MagneticButton>
           <Link href="/editorial" className="eyebrow underline underline-offset-4 transition-opacity hover:opacity-60">
             Discover
           </Link>

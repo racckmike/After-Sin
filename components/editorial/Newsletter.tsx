@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SignatureMark } from "@/components/ui/SignatureMark";
+import { MagneticSubmitButton } from "@/components/ui/MagneticButton";
 
 export function Newsletter() {
   const [email, setEmail] = useState("");
@@ -62,13 +63,13 @@ export function Newsletter() {
                 disabled={submitting}
                 className="eyebrow flex-1 bg-transparent py-3 placeholder:text-soft-grey/70 focus:outline-none disabled:opacity-60"
               />
-              <button
+              <MagneticSubmitButton
                 type="submit"
                 disabled={submitting}
                 className="eyebrow px-2 transition-opacity hover:opacity-60 disabled:opacity-40"
               >
                 {submitting ? "…" : "JOIN"}
-              </button>
+              </MagneticSubmitButton>
             </form>
             {error && <p className="eyebrow mt-2 text-red-400">{error}</p>}
           </>

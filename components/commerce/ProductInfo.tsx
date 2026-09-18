@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { Product } from "@/lib/types";
 import { SizeSelector } from "@/components/commerce/SizeSelector";
 import { Accordion } from "@/components/ui/Accordion";
+import { MagneticSubmitButton } from "@/components/ui/MagneticButton";
 import { useCart } from "@/context/CartContext";
 import { useRegion } from "@/context/RegionContext";
 import { getProductPrice } from "@/lib/format";
@@ -145,19 +146,19 @@ export function ProductInfo({ product, color, onColorChange }: Props) {
                   disabled={submitting}
                   className="eyebrow flex-1 bg-transparent px-4 placeholder:text-charcoal/50 focus:outline-none disabled:opacity-60"
                 />
-                <button
+                <MagneticSubmitButton
                   type="submit"
                   disabled={submitting}
                   className="eyebrow px-5 transition-opacity hover:opacity-60 disabled:opacity-40"
                 >
                   {submitting ? "…" : "JOIN WAITLIST"}
-                </button>
+                </MagneticSubmitButton>
               </form>
               {notifyError && <p className="eyebrow mt-2 text-red-800">{notifyError}</p>}
             </>
           )
         ) : (
-          <button
+          <MagneticSubmitButton
             type="button"
             disabled={!canAdd}
             onClick={() => {
@@ -168,7 +169,7 @@ export function ProductInfo({ product, color, onColorChange }: Props) {
             className="flex h-12 w-full items-center justify-center bg-off-black text-sm tracking-[0.08em] text-bone transition-all duration-200 hover:opacity-85 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:active:scale-100"
           >
             {soldOut ? "SOLD OUT" : size ? "ADD TO BAG" : "SELECT A SIZE"}
-          </button>
+          </MagneticSubmitButton>
         )}
       </div>
 

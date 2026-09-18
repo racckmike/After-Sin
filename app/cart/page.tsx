@@ -6,6 +6,7 @@ import { useCart } from "@/context/CartContext";
 import { useRegion } from "@/context/RegionContext";
 import { formatAmount, getProductPriceValue } from "@/lib/format";
 import { PlaceholderFrame } from "@/components/ui/PlaceholderFrame";
+import { MagneticSubmitButton } from "@/components/ui/MagneticButton";
 
 export default function CartPage() {
   const { lines, removeItem, updateQuantity } = useCart();
@@ -103,14 +104,14 @@ export default function CartPage() {
               Checkout is only available for Mexico right now.
             </p>
           )}
-          <button
+          <MagneticSubmitButton
             type="button"
             disabled={region.code !== "MX"}
             onClick={() => router.push("/checkout")}
             className="mt-6 flex h-12 w-full items-center justify-center bg-off-black text-sm tracking-[0.08em] text-bone transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-40"
           >
             CHECKOUT
-          </button>
+          </MagneticSubmitButton>
         </div>
       </div>
     </div>
