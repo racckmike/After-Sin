@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { products } from "@/data/products";
 import { collections } from "@/data/collections";
 import { getProductPrice } from "@/lib/format";
@@ -153,8 +154,12 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
                             }}
                             className="flex items-center gap-3"
                           >
-                            <span className="h-14 w-11 shrink-0">
-                              <PlaceholderFrame label="" ratio="4 / 5" />
+                            <span className="relative h-14 w-11 shrink-0 overflow-hidden bg-soft-grey/30">
+                              {p.images[0]?.src ? (
+                                <Image src={p.images[0].src} alt="" fill sizes="44px" className="object-cover" />
+                              ) : (
+                                <PlaceholderFrame label="" ratio="4 / 5" />
+                              )}
                             </span>
                             <span>
                               <span className="block text-sm">{p.name}</span>

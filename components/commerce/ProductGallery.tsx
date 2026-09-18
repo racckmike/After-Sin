@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import type { ProductImage } from "@/lib/types";
 import { PlaceholderFrame } from "@/components/ui/PlaceholderFrame";
@@ -18,10 +18,15 @@ function GalleryFrame({ image, ratio, className = "" }: { image: ProductImage; r
 
 export function ProductGallery({ images }: { images: ProductImage[] }) {
   const [active, setActive] = useState(0);
+  const [prevImages, setPrevImages] = useState(images);
 
-  useEffect(() => {
+  // Reset to the first image when the gallery's image set changes (e.g. a
+  // color swap) — adjusting state during render instead of in an effect
+  // avoids the extra render pass a setState-in-effect would cause.
+  if (images !== prevImages) {
+    setPrevImages(images);
     setActive(0);
-  }, [images]);
+  }
 
   const activeImage = images[active] ?? images[0];
 

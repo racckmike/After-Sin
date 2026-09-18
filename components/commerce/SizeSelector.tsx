@@ -1,21 +1,40 @@
 "use client";
 
+import { useState } from "react";
+
 interface Props {
   sizes: string[];
   soldOutSizes?: string[];
   selected: string | null;
   onSelect: (size: string) => void;
+  fitNotes?: string[];
 }
 
-export function SizeSelector({ sizes, soldOutSizes = [], selected, onSelect }: Props) {
+export function SizeSelector({ sizes, soldOutSizes = [], selected, onSelect, fitNotes = [] }: Props) {
+  const [guideOpen, setGuideOpen] = useState(false);
+
   return (
     <div>
       <div className="mb-2 flex items-center justify-between">
         <span className="eyebrow">Size</span>
-        <button type="button" className="eyebrow underline underline-offset-4 text-charcoal">
-          Size Guide
-        </button>
+        {fitNotes.length > 0 && (
+          <button
+            type="button"
+            onClick={() => setGuideOpen((v) => !v)}
+            aria-expanded={guideOpen}
+            className="eyebrow underline underline-offset-4 text-charcoal"
+          >
+            Size Guide
+          </button>
+        )}
       </div>
+      {guideOpen && (
+        <ul className="mb-3 flex flex-col gap-1 border border-off-black/20 p-3 text-xs text-charcoal">
+          {fitNotes.map((note) => (
+            <li key={note}>{note}</li>
+          ))}
+        </ul>
+      )}
       <div className="grid grid-cols-6 gap-2" role="radiogroup" aria-label="Size">
         {sizes.map((size) => {
           const soldOut = soldOutSizes.includes(size);

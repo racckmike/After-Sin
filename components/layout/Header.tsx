@@ -8,10 +8,10 @@ import { MobileMenu } from "@/components/layout/MobileMenu";
 import { SearchOverlay } from "@/components/commerce/SearchOverlay";
 import { useCart } from "@/context/CartContext";
 import { authClient } from "@/lib/auth/client";
+import { collections } from "@/data/collections";
 
 const NAV = [
   { label: "Shop", href: "/shop" },
-  { label: "Collections", href: "/collections/dark" },
   { label: "Editorial", href: "/editorial" },
   { label: "About", href: "/about" },
 ];
@@ -57,7 +57,31 @@ export function Header({ overDarkHero = false }: { overDarkHero?: boolean }) {
               <span className={`h-px w-5 ${solid ? "bg-off-black" : "bg-bone"}`} />
             </button>
             <nav className="hidden items-center gap-7 md:flex">
-              {NAV.map((item) => (
+              <Link href="/shop" className="eyebrow transition-opacity hover:opacity-60">
+                Shop
+              </Link>
+              <div className="group relative">
+                <Link href={`/collections/${collections[0].slug}`} className="eyebrow transition-opacity hover:opacity-60">
+                  Collections
+                </Link>
+                <div className="invisible absolute left-0 top-full pt-3 opacity-0 transition-opacity duration-150 group-hover:visible group-hover:opacity-100">
+                  <div className="flex min-w-[220px] flex-col border border-off-black/15 bg-bone py-2 text-off-black shadow-[0_8px_24px_rgba(0,0,0,0.08)]">
+                    {collections.map((c) => (
+                      <Link
+                        key={c.slug}
+                        href={`/collections/${c.slug}`}
+                        className="flex items-baseline justify-between gap-4 px-4 py-2.5 text-sm transition-opacity hover:opacity-60"
+                      >
+                        <span>{c.name}</span>
+                        {c.status === "coming-soon" && (
+                          <span className="eyebrow text-[10px] text-charcoal">Soon</span>
+                        )}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              {NAV.slice(1).map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
@@ -104,7 +128,12 @@ export function Header({ overDarkHero = false }: { overDarkHero?: boolean }) {
         </div>
       </header>
 
-      <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} nav={NAV} />
+      <MobileMenu
+        open={menuOpen}
+        onClose={() => setMenuOpen(false)}
+        nav={NAV.slice(1)}
+        collections={collections.map((c) => ({ label: c.name, href: `/collections/${c.slug}`, status: c.status }))}
+      />
       <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
     </>
   );

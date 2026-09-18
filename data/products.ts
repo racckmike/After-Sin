@@ -73,7 +73,7 @@ export const products: Product[] = [
       },
     ],
     summary:
-      "AFTER SIN's first hero piece — DROP 001: CONSEQUENCE. Premium heavyweight full-zip hoodie in two colorways. Pricing, materials, and care below are directional until physical samples are approved.",
+      "AFTER SIN's first hero piece — DROP 001: CONSEQUENCE. Premium heavyweight full-zip hoodie in two colorways.",
     details: [
       "Style AS-ZH001 — Drop 001: Consequence",
       "Oversized, boxy fit with dropped shoulders",
@@ -84,13 +84,13 @@ export const products: Product[] = [
     ],
     fit: [
       "Fits oversized — model is 6'0\" / 183cm wearing size M",
-      "DIRECTIONAL — full size guide pending physical sample fitting",
+      "Full size guide coming soon",
     ],
     materials: [
-      "PLACEHOLDER — targeting ~480GSM heavyweight cotton fleece",
-      "Final composition confirmed after fabric testing, not yet locked",
+      "Targeting approximately 480GSM heavyweight cotton fleece",
+      "Final composition confirmed ahead of shipping",
     ],
-    care: ["NOT LOCKED — care instructions confirmed after wash testing"],
+    care: ["Care instructions confirmed ahead of shipping"],
   },
   {
     slug: "drop-001-discipline-sweatpants",
@@ -147,7 +147,7 @@ export const products: Product[] = [
       },
     ],
     summary:
-      "Drop 001: Consequence. Heavyweight relaxed sweatpants with an embroidered signature cross at the thigh, in four colorways. Pricing, materials, and care below are directional until physical samples are approved.",
+      "Drop 001: Consequence. Heavyweight relaxed sweatpants with an embroidered signature cross at the thigh, in four colorways.",
     details: [
       "Style AS-SP001 — Drop 001: Consequence",
       "Relaxed, oversized fit through the leg",
@@ -157,13 +157,13 @@ export const products: Product[] = [
     ],
     fit: [
       "Fits relaxed — model is 6'0\" / 183cm wearing size M",
-      "DIRECTIONAL — full size guide pending physical sample fitting",
+      "Full size guide coming soon",
     ],
     materials: [
-      "PLACEHOLDER — targeting ~420GSM heavyweight cotton fleece",
-      "Final composition confirmed after fabric testing, not yet locked",
+      "Targeting approximately 420GSM heavyweight cotton fleece",
+      "Final composition confirmed ahead of shipping",
     ],
-    care: ["NOT LOCKED — care instructions confirmed after wash testing"],
+    care: ["Care instructions confirmed ahead of shipping"],
   },
 ];
 

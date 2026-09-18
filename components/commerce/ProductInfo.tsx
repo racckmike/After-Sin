@@ -16,6 +16,7 @@ interface Props {
 
 export function ProductInfo({ product, color, onColorChange }: Props) {
   const [size, setSize] = useState<string | null>(null);
+  const [quantity, setQuantity] = useState(1);
   const [notifyEmail, setNotifyEmail] = useState("");
   const [notified, setNotified] = useState(false);
   const [notifyError, setNotifyError] = useState<string | null>(null);
@@ -67,8 +68,36 @@ export function ProductInfo({ product, color, onColorChange }: Props) {
           soldOutSizes={product.soldOutSizes}
           selected={size}
           onSelect={setSize}
+          fitNotes={product.fit}
         />
       </div>
+
+      {!soldOut && !comingSoon && (
+        <div className="mt-7">
+          <p className="eyebrow mb-2">Quantity</p>
+          <div className="flex h-11 w-32 items-center justify-between border border-off-black/70">
+            <button
+              type="button"
+              onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+              aria-label="Decrease quantity"
+              className="flex h-full w-11 items-center justify-center text-lg transition-opacity hover:opacity-60"
+            >
+              −
+            </button>
+            <span aria-live="polite" className="text-sm">
+              {quantity}
+            </span>
+            <button
+              type="button"
+              onClick={() => setQuantity((q) => Math.min(10, q + 1))}
+              aria-label="Increase quantity"
+              className="flex h-full w-11 items-center justify-center text-lg transition-opacity hover:opacity-60"
+            >
+              +
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="mt-7">
         {comingSoon ? (
@@ -133,7 +162,7 @@ export function ProductInfo({ product, color, onColorChange }: Props) {
             disabled={!canAdd}
             onClick={() => {
               if (!canAdd || !size) return;
-              addItem(product, color, size);
+              addItem(product, color, size, quantity);
               openCart();
             }}
             className="flex h-12 w-full items-center justify-center bg-off-black text-sm tracking-[0.08em] text-bone transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-40"

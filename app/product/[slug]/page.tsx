@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { products, getProduct } from "@/data/products";
 import { ProductDisplay } from "@/components/commerce/ProductDisplay";
@@ -5,6 +6,27 @@ import { ProductGrid } from "@/components/commerce/ProductGrid";
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const product = getProduct(slug);
+  if (!product) return {};
+  const title = `${product.name} — AFTER SIN`;
+  const image = product.images[0]?.src;
+  return {
+    title,
+    description: product.summary,
+    openGraph: {
+      title,
+      description: product.summary,
+      images: image ? [{ url: image }] : undefined,
+    },
+  };
 }
 
 export default async function ProductPage({

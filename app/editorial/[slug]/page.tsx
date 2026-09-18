@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { editorialEntries, getEditorialEntry } from "@/data/editorial";
@@ -5,6 +6,21 @@ import { PlaceholderFrame } from "@/components/ui/PlaceholderFrame";
 
 export function generateStaticParams() {
   return editorialEntries.map((e) => ({ slug: e.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const entry = getEditorialEntry(slug);
+  if (!entry) return {};
+  return {
+    title: `${entry.title} — AFTER SIN`,
+    description: entry.excerpt,
+    openGraph: { title: `${entry.title} — AFTER SIN`, description: entry.excerpt },
+  };
 }
 
 export default async function EditorialEntryPage({
@@ -45,15 +61,13 @@ export default async function EditorialEntryPage({
       </div>
       <div className="mx-auto max-w-[720px] px-4 py-20">
         <p className="text-lg leading-relaxed text-charcoal">{entry.excerpt}</p>
-        <p className="mt-6 text-sm text-charcoal">
-          Full {entry.type} content — PLACEHOLDER. This template is built so real
-          photography and copy can drop in without touching the layout.
-        </p>
       </div>
-      <div className="grid grid-cols-1 gap-4 px-4 pb-20 md:grid-cols-2 md:px-8">
-        <PlaceholderFrame label="EDITORIAL IMAGE — PLACEHOLDER" ratio="4 / 5" tone="dark" />
-        <PlaceholderFrame label="EDITORIAL IMAGE — PLACEHOLDER" ratio="4 / 5" tone="dark" />
-      </div>
+      {!entry.heroImage && (
+        <div className="grid grid-cols-1 gap-4 px-4 pb-20 md:grid-cols-2 md:px-8">
+          <PlaceholderFrame label="Full story — PLACEHOLDER" ratio="4 / 5" tone="dark" />
+          <PlaceholderFrame label="Full story — PLACEHOLDER" ratio="4 / 5" tone="dark" />
+        </div>
+      )}
     </div>
   );
 }

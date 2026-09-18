@@ -9,14 +9,20 @@ interface NavItem {
   href: string;
 }
 
+interface CollectionNavItem extends NavItem {
+  status: "live" | "coming-soon";
+}
+
 export function MobileMenu({
   open,
   onClose,
   nav,
+  collections = [],
 }: {
   open: boolean;
   onClose: () => void;
   nav: NavItem[];
+  collections?: CollectionNavItem[];
 }) {
   useEffect(() => {
     if (open) document.body.style.overflow = "hidden";
@@ -51,7 +57,28 @@ export function MobileMenu({
         >
           &times;
         </button>
-        <nav className="flex flex-col gap-6">
+        <nav className="flex flex-col gap-6 overflow-y-auto">
+          <Link href="/shop" onClick={onClose} className="font-display text-3xl">
+            Shop
+          </Link>
+          {collections.length > 0 && (
+            <div className="flex flex-col gap-3 pl-1">
+              <span className="eyebrow text-charcoal">Collections</span>
+              {collections.map((c) => (
+                <Link
+                  key={c.href}
+                  href={c.href}
+                  onClick={onClose}
+                  className="flex items-baseline justify-between gap-4 text-xl"
+                >
+                  <span>{c.label}</span>
+                  {c.status === "coming-soon" && (
+                    <span className="eyebrow text-[10px] text-charcoal">Soon</span>
+                  )}
+                </Link>
+              ))}
+            </div>
+          )}
           {nav.map((item) => (
             <Link
               key={item.href}

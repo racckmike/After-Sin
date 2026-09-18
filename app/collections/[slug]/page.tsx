@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { collections, getCollection } from "@/data/collections";
@@ -11,6 +12,22 @@ const collectionCampaignImage: Record<string, string> = {
 
 export function generateStaticParams() {
   return collections.map((c) => ({ slug: c.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const collection = getCollection(slug);
+  if (!collection) return {};
+  const title = `${collection.name} — AFTER SIN`;
+  return {
+    title,
+    description: collection.description,
+    openGraph: { title, description: collection.description },
+  };
 }
 
 export default async function CollectionPage({

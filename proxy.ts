@@ -24,6 +24,18 @@ import { processAuthMiddleware, DEFAULT_AUTH_SKIP_ROUTES } from "@neondatabase/a
  * the session-cookie refresh, so effectively nothing here needs to be
  * "protected" by it. Adding a new top-level public route later means
  * adding it to SKIP_ROUTES too.
+ *
+ * BUG FIX: SKIP_ROUTES is an allowlist, so any path NOT on it (a typo,
+ * a dead link, a genuinely nonexistent route) was treated as requiring a
+ * session and hit the "redirect_login" branch below, 307-redirecting an
+ * anonymous visitor to /account instead of letting Next.js render its
+ * own 404 page — breaking 404 handling site-wide and returning a 3xx
+ * instead of a 404 status to crawlers. Since nothing is actually meant
+ * to be protected at this layer (per the paragraph above), redirect_login
+ * is treated as a no-op "allow" below instead of performing the
+ * redirect — this does not touch redirect_oauth, which is a real,
+ * required mid-flow OAuth token-exchange redirect, unrelated to route
+ * gating.
  */
 const SKIP_ROUTES = [
   ...DEFAULT_AUTH_SKIP_ROUTES,
@@ -65,9 +77,17 @@ export default async function middleware(request: NextRequest) {
       if (result.cookies) for (const cookie of result.cookies) response.headers.append("Set-Cookie", cookie);
       return response;
     }
-    case "redirect_oauth":
-    case "redirect_login": {
+    case "redirect_oauth": {
       const response = NextResponse.redirect(result.redirectUrl);
+      if (result.cookies) for (const cookie of result.cookies) response.headers.append("Set-Cookie", cookie);
+      return response;
+    }
+    case "redirect_login": {
+      // See comment above SKIP_ROUTES — this is not an auth gate, so a
+      // missing session on an unlisted route just falls through to
+      // Next's normal routing (a real page, or its own 404) instead of
+      // redirecting to /account.
+      const response = NextResponse.next();
       if (result.cookies) for (const cookie of result.cookies) response.headers.append("Set-Cookie", cookie);
       return response;
     }
