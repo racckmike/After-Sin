@@ -1,12 +1,37 @@
 import type { Metadata } from "next";
-import { InfoPage } from "@/components/ui/InfoPage";
+import { auth } from "@/lib/auth/server";
+import { getProfile, listAddresses } from "@/lib/customer/db";
+import { AuthForms } from "@/components/account/AuthForms";
+import { AccountDashboard } from "@/components/account/AccountDashboard";
 
 export const metadata: Metadata = { title: "Account — AFTER SIN" };
+export const dynamic = "force-dynamic";
 
-export default function AccountPage() {
+export default async function AccountPage() {
+  const { data: session } = await auth.getSession();
+
+  if (!session?.user) {
+    return <AuthForms />;
+  }
+
+  const { user } = session;
+  const [profile, addresses] = await Promise.all([
+    getProfile(user.id),
+    listAddresses(user.id),
+  ]);
+
+  // Falls back to splitting Better Auth's single "name" field for a user
+  // who signed up before this app-level profile table existed.
+  const [fallbackFirst, ...fallbackRest] = (user.name || "").split(" ");
+  const firstName = profile?.firstName || fallbackFirst || "there";
+  const lastName = profile?.lastName || fallbackRest.join(" ");
+
   return (
-    <InfoPage title="Account">
-      <p>Accounts open when Drop 001 does. PLACEHOLDER — sign-in architecture not yet built.</p>
-    </InfoPage>
+    <AccountDashboard
+      user={{ id: user.id, email: user.email, emailVerified: user.emailVerified }}
+      firstName={firstName}
+      lastName={lastName}
+      addresses={addresses}
+    />
   );
 }

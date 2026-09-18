@@ -7,6 +7,7 @@ import { CurrencySelector } from "@/components/layout/CurrencySelector";
 import { MobileMenu } from "@/components/layout/MobileMenu";
 import { SearchOverlay } from "@/components/commerce/SearchOverlay";
 import { useCart } from "@/context/CartContext";
+import { authClient } from "@/lib/auth/client";
 
 const NAV = [
   { label: "Shop", href: "/shop" },
@@ -20,6 +21,8 @@ export function Header({ overDarkHero = false }: { overDarkHero?: boolean }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const { count, openCart } = useCart();
+  const { data: session } = authClient.useSession();
+  const authed = !!session?.user;
 
   useEffect(() => {
     if (!overDarkHero) return;
@@ -77,8 +80,16 @@ export function Header({ overDarkHero = false }: { overDarkHero?: boolean }) {
             <button type="button" aria-label="Search" onClick={() => setSearchOpen(true)}>
               <SearchIcon />
             </button>
-            <Link href="/account" aria-label="Account" className="hidden md:inline-flex">
+            <Link href="/account" aria-label="Account" className="relative hidden md:inline-flex">
               <AccountIcon />
+              {authed && (
+                <span
+                  aria-hidden
+                  className={`absolute -right-0.5 -top-0.5 h-1.5 w-1.5 rounded-full ${
+                    solid ? "bg-off-black" : "bg-bone"
+                  }`}
+                />
+              )}
             </Link>
             <button
               type="button"
