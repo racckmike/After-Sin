@@ -2,10 +2,15 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { useCart } from "@/context/CartContext";
+import Image from "next/image";
+import { useCart, type CartLine } from "@/context/CartContext";
 import { useRegion } from "@/context/RegionContext";
 import { formatAmount, getProductPriceValue } from "@/lib/format";
 import { PlaceholderFrame } from "@/components/ui/PlaceholderFrame";
+
+function lineImage(line: CartLine) {
+  return line.product.images.find((img) => img.color === line.color) ?? line.product.images[0];
+}
 
 export function CartDrawer() {
   const { lines, isOpen, closeCart, removeItem, updateQuantity, count } = useCart();
@@ -64,8 +69,18 @@ export function CartDrawer() {
             <ul className="flex flex-col gap-6">
               {lines.map((line) => (
                 <li key={line.key} className="flex gap-4">
-                  <div className="relative h-28 w-20 shrink-0">
-                    <PlaceholderFrame label="" className="h-full w-full" />
+                  <div className="relative h-28 w-20 shrink-0 overflow-hidden bg-soft-grey/30">
+                    {lineImage(line)?.src ? (
+                      <Image
+                        src={lineImage(line)!.src!}
+                        alt={lineImage(line)!.alt}
+                        fill
+                        sizes="80px"
+                        className="object-cover"
+                      />
+                    ) : (
+                      <PlaceholderFrame label="" className="h-full w-full" />
+                    )}
                   </div>
                   <div className="flex flex-1 flex-col gap-1">
                     <div className="flex items-start justify-between gap-2">

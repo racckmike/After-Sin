@@ -1,12 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useCart } from "@/context/CartContext";
+import { useCart, type CartLine } from "@/context/CartContext";
 import { useRegion } from "@/context/RegionContext";
 import { formatAmount, getProductPriceValue } from "@/lib/format";
 import { PlaceholderFrame } from "@/components/ui/PlaceholderFrame";
 import { EditorialSubmitButton } from "@/components/ui/EditorialButton";
+
+function lineImage(line: CartLine) {
+  return line.product.images.find((img) => img.color === line.color) ?? line.product.images[0];
+}
 
 export default function CartPage() {
   const { lines, removeItem, updateQuantity } = useCart();
@@ -40,8 +45,18 @@ export default function CartPage() {
         <ul className="flex flex-col gap-8">
           {lines.map((line) => (
             <li key={line.key} className="flex gap-5 border-b hairline pb-8">
-              <div className="w-32 shrink-0 md:w-40">
-                <PlaceholderFrame label="" ratio="4 / 5" tone="dark" />
+              <div className="relative w-32 shrink-0 overflow-hidden bg-soft-grey/30 md:w-40" style={{ aspectRatio: "4 / 5" }}>
+                {lineImage(line)?.src ? (
+                  <Image
+                    src={lineImage(line)!.src!}
+                    alt={lineImage(line)!.alt}
+                    fill
+                    sizes="160px"
+                    className="object-cover"
+                  />
+                ) : (
+                  <PlaceholderFrame label="" ratio="4 / 5" tone="dark" />
+                )}
               </div>
               <div className="flex flex-1 flex-col">
                 <div className="flex items-start justify-between gap-4">
