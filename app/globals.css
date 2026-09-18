@@ -28,6 +28,32 @@
 
   /* collection accent — neutral by default; a collection page may override */
   --accent: var(--color-off-black);
+  /* lightened toward bone for legibility as text over dark campaign
+     photography. NOTE: a custom property's value is resolved where
+     it's DECLARED, not where var() reads it — so this has to be
+     redeclared inside every [data-collection] override below too,
+     otherwise it stays permanently locked to the --accent that was in
+     scope here at the root, ignoring any per-world override entirely. */
+  --accent-on-dark: color-mix(in srgb, var(--accent) 55%, var(--color-bone) 45%);
+}
+
+/*
+  Per-world accent overrides — subtle identity tints, not a palette
+  change. Applied via a [data-collection] attribute on whatever DOM
+  scope currently represents "browsing this world" (a collection tile,
+  a collection page, a PDP). Colors are pulled from the brand's own
+  existing swatches, never invented: Oxblood is the Drop 001 hoodie's
+  second colorway; antique-silver was already a defined-but-unused
+  token. RACING has no real product/photography yet, so no accent for
+  it either — see data/collections.ts.
+*/
+[data-collection="dark"] {
+  --accent: #5c2430; /* Oxblood — data/products.ts's Oxblood swatch */
+  --accent-on-dark: color-mix(in srgb, var(--accent) 55%, var(--color-bone) 45%);
+}
+[data-collection="core"] {
+  --accent: var(--color-antique-silver);
+  --accent-on-dark: color-mix(in srgb, var(--accent) 55%, var(--color-bone) 45%);
 }
 
 @theme inline {

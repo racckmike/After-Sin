@@ -42,7 +42,7 @@ export default async function CollectionPage({
   const collectionProducts = getProductsByCollection(collection.slug);
 
   return (
-    <div>
+    <div data-collection={collection.slug}>
       <div className="on-dark relative flex h-[58vh] min-h-[380px] w-full items-end overflow-hidden bg-off-black text-bone">
         {collectionCampaignImage[collection.slug] ? (
           <Image
@@ -62,7 +62,7 @@ export default async function CollectionPage({
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-off-black/85 via-off-black/15 to-transparent" />
         <div className="relative z-10 mx-auto w-full max-w-[1600px] px-4 pb-12 md:px-8">
-          <p className="hero-rise eyebrow text-soft-grey" style={{ animationDelay: "0.1s" }}>
+          <p className="hero-rise eyebrow text-[var(--accent-on-dark)]" style={{ animationDelay: "0.1s" }}>
             {collection.tagline}
           </p>
           <h1

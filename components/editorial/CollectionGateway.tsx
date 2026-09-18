@@ -7,6 +7,7 @@ export function CollectionGateway({ collection }: { collection: Collection }) {
   return (
     <Link
       href={`/collections/${collection.slug}`}
+      data-collection={collection.slug}
       className="group relative flex flex-col overflow-hidden"
     >
       <div className="on-dark relative overflow-hidden bg-charcoal" style={{ aspectRatio: "3 / 4" }}>
@@ -31,8 +32,12 @@ export function CollectionGateway({ collection }: { collection: Collection }) {
           <span className="eyebrow absolute right-4 top-4 text-bone/80">Coming Soon</span>
         )}
         <div className="absolute inset-x-0 bottom-0 p-5">
-          <p className="font-display text-2xl text-bone md:text-3xl">{collection.name}</p>
-          <p className="eyebrow mt-1.5 text-soft-grey transition-opacity duration-300 group-hover:opacity-100 md:opacity-70">
+          <span
+            className="block h-[2px] w-8 scale-x-0 bg-[var(--accent-on-dark)] transition-transform duration-500 ease-out group-hover:scale-x-100"
+            aria-hidden
+          />
+          <p className="mt-3 font-display text-2xl text-bone md:text-3xl">{collection.name}</p>
+          <p className="eyebrow mt-1.5 text-[var(--accent-on-dark)] transition-opacity duration-300 group-hover:opacity-100 md:opacity-80">
             {collection.tagline}
           </p>
         </div>

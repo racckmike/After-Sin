@@ -32,8 +32,8 @@ export function ProductInfo({ product, color, onColorChange }: Props) {
   const priceIsLocked = product.priceMXN != null;
 
   return (
-    <div className="flex flex-col">
-      <p className="eyebrow text-charcoal">AFTER SIN {product.world.toUpperCase()}</p>
+    <div className="flex flex-col" data-collection={product.collectionSlug}>
+      <p className="eyebrow text-[var(--accent)]">AFTER SIN {product.world.toUpperCase()}</p>
       <h1 className="mt-2 font-display text-4xl md:text-5xl">{product.name}</h1>
       <p className="mt-3 text-lg">{getProductPrice(product, region.currency)}</p>
 
