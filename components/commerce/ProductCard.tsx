@@ -44,14 +44,18 @@ export function ProductCard({ product }: { product: Product }) {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      <div className="relative overflow-hidden">
+      <div
+        className={`relative overflow-hidden transition-transform duration-700 ease-out ${
+          hover ? "scale-[1.03]" : "scale-100"
+        }`}
+      >
         <CardFrame
           image={product.images[0]}
-          className={`transition-opacity duration-300 ${hover ? "opacity-0" : "opacity-100"}`}
+          className={`transition-opacity duration-500 ${hover ? "opacity-0" : "opacity-100"}`}
         />
         <CardFrame
           image={secondaryImage}
-          className={`absolute inset-0 transition-opacity duration-300 ${
+          className={`absolute inset-0 transition-opacity duration-500 ${
             hover ? "opacity-100" : "opacity-0"
           }`}
         />
@@ -59,10 +63,12 @@ export function ProductCard({ product }: { product: Product }) {
           <span className="eyebrow absolute left-3 top-3 bg-bone px-2 py-1">New</span>
         )}
       </div>
-      <div className="mt-3 flex items-start justify-between gap-3">
+      <div className="mt-4 flex items-start justify-between gap-3">
         <div>
-          <p className="font-display text-[15px] leading-tight">{product.name}</p>
-          <p className="mt-0.5 text-xs text-charcoal">
+          <p className="font-display text-base leading-tight transition-opacity group-hover:opacity-70">
+            {product.name}
+          </p>
+          <p className="mt-1 text-xs text-charcoal">
             {product.colors.map((c) => c.name).join(" / ")}
           </p>
         </div>

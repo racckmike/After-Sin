@@ -47,7 +47,7 @@ export function SizeSelector({ sizes, soldOutSizes = [], selected, onSelect, fit
               aria-checked={isSelected}
               disabled={soldOut}
               onClick={() => onSelect(size)}
-              className={`relative flex h-11 items-center justify-center border text-sm transition-colors ${
+              className={`relative flex h-11 items-center justify-center border text-sm transition-all duration-150 active:scale-95 ${
                 isSelected
                   ? "border-off-black bg-off-black text-bone"
                   : soldOut

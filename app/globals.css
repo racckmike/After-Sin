@@ -46,6 +46,26 @@
   --breakpoint-xs: 22.5rem;
 }
 
+@keyframes slow-zoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
@@ -102,6 +122,20 @@ body {
   }
   .on-dark .hairline {
     border-color: var(--hairline-on-dark);
+  }
+
+  /* one-shot entrance for hero text only — never the hero image itself,
+     which is the LCP candidate and must paint immediately */
+  .hero-rise {
+    animation: hero-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  /* slow, near-imperceptible campaign-image drift — a held cinematic
+     shot rather than a static photo. The image itself still paints
+     immediately (this only animates its transform), so it doesn't
+     delay LCP the way a fade/opacity entrance would. */
+  .slow-zoom {
+    animation: slow-zoom 16s ease-out both;
   }
 
   /* placeholder campaign imagery — honest, labeled, no fake photography */

@@ -5,11 +5,29 @@ import Image from "next/image";
 import type { ProductImage } from "@/lib/types";
 import { PlaceholderFrame } from "@/components/ui/PlaceholderFrame";
 
-function GalleryFrame({ image, ratio, className = "" }: { image: ProductImage; ratio: string; className?: string }) {
+function GalleryFrame({
+  image,
+  ratio,
+  className = "",
+  zoomOnHover = false,
+}: {
+  image: ProductImage;
+  ratio: string;
+  className?: string;
+  zoomOnHover?: boolean;
+}) {
   if (image.src) {
     return (
-      <div className={`relative overflow-hidden bg-charcoal ${className}`} style={{ aspectRatio: ratio }}>
-        <Image src={image.src} alt={image.alt} fill sizes="(min-width: 768px) 60vw, 100vw" className="object-cover" />
+      <div className={`group relative overflow-hidden bg-charcoal ${className}`} style={{ aspectRatio: ratio }}>
+        <Image
+          src={image.src}
+          alt={image.alt}
+          fill
+          sizes="(min-width: 768px) 60vw, 100vw"
+          className={`object-cover ${
+            zoomOnHover ? "transition-transform duration-700 ease-out group-hover:scale-[1.06]" : ""
+          }`}
+        />
       </div>
     );
   }
@@ -50,7 +68,9 @@ export function ProductGallery({ images }: { images: ProductImage[] }) {
       </div>
 
       <div>
-        <GalleryFrame image={activeImage} ratio="4 / 5" className="w-full" />
+        <div key={activeImage.id} className="hero-rise" style={{ animationDuration: "0.4s" }}>
+          <GalleryFrame image={activeImage} ratio="4 / 5" className="w-full" zoomOnHover />
+        </div>
         <div className="mt-3 flex gap-2 overflow-x-auto md:hidden">
           {images.map((img, i) => (
             <button

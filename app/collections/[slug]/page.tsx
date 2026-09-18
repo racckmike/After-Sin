@@ -43,14 +43,14 @@ export default async function CollectionPage({
 
   return (
     <div>
-      <div className="on-dark relative flex h-[46vh] min-h-[320px] w-full items-end bg-off-black text-bone">
+      <div className="on-dark relative flex h-[58vh] min-h-[380px] w-full items-end overflow-hidden bg-off-black text-bone">
         {collectionCampaignImage[collection.slug] ? (
           <Image
             src={collectionCampaignImage[collection.slug]}
             alt={`${collection.name} campaign`}
             fill
             sizes="100vw"
-            className="absolute inset-0 h-full w-full object-cover object-top"
+            className="slow-zoom absolute inset-0 h-full w-full object-cover object-top"
             priority
           />
         ) : (
@@ -60,14 +60,21 @@ export default async function CollectionPage({
             className="absolute inset-0 h-full w-full"
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-off-black/80 via-off-black/10 to-transparent" />
-        <div className="relative z-10 mx-auto w-full max-w-[1600px] px-4 pb-10 md:px-8">
-          <p className="eyebrow text-soft-grey">{collection.tagline}</p>
-          <h1 className="mt-2 font-display text-5xl md:text-6xl">{collection.name}</h1>
+        <div className="absolute inset-0 bg-gradient-to-t from-off-black/85 via-off-black/15 to-transparent" />
+        <div className="relative z-10 mx-auto w-full max-w-[1600px] px-4 pb-12 md:px-8">
+          <p className="hero-rise eyebrow text-soft-grey" style={{ animationDelay: "0.1s" }}>
+            {collection.tagline}
+          </p>
+          <h1
+            className="hero-rise mt-2 font-display text-6xl md:text-7xl"
+            style={{ animationDelay: "0.2s" }}
+          >
+            {collection.name}
+          </h1>
         </div>
       </div>
 
-      <div className="mx-auto max-w-[1600px] px-4 py-12 md:px-8 md:py-16">
+      <div className="mx-auto max-w-[1600px] px-4 py-16 md:px-8 md:py-20">
         <p className="max-w-[60ch] text-[15px] text-charcoal">{collection.description}</p>
 
         {collection.status === "coming-soon" ? (

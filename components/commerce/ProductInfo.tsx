@@ -34,7 +34,7 @@ export function ProductInfo({ product, color, onColorChange }: Props) {
   return (
     <div className="flex flex-col">
       <p className="eyebrow text-charcoal">AFTER SIN {product.world.toUpperCase()}</p>
-      <h1 className="mt-2 font-display text-3xl md:text-4xl">{product.name}</h1>
+      <h1 className="mt-2 font-display text-4xl md:text-5xl">{product.name}</h1>
       <p className="mt-3 text-lg">{getProductPrice(product, region.currency)}</p>
 
       {(soldOut || product.status === "low-stock" || (comingSoon && priceIsLocked)) && (
@@ -53,7 +53,7 @@ export function ProductInfo({ product, color, onColorChange }: Props) {
               onClick={() => onColorChange(c.name)}
               aria-label={c.name}
               aria-pressed={color === c.name}
-              className={`h-8 w-8 rounded-full border-2 transition-shadow ${
+              className={`h-8 w-8 rounded-full border-2 transition-all duration-200 hover:scale-110 ${
                 color === c.name ? "border-off-black" : "border-transparent"
               }`}
               style={{ backgroundColor: c.swatch }}
@@ -165,7 +165,7 @@ export function ProductInfo({ product, color, onColorChange }: Props) {
               addItem(product, color, size, quantity);
               openCart();
             }}
-            className="flex h-12 w-full items-center justify-center bg-off-black text-sm tracking-[0.08em] text-bone transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-40"
+            className="flex h-12 w-full items-center justify-center bg-off-black text-sm tracking-[0.08em] text-bone transition-all duration-200 hover:opacity-85 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:active:scale-100"
           >
             {soldOut ? "SOLD OUT" : size ? "ADD TO BAG" : "SELECT A SIZE"}
           </button>

@@ -34,7 +34,7 @@ export default async function EditorialEntryPage({
 
   return (
     <div>
-      <div className="on-dark relative flex h-[70vh] min-h-[420px] w-full items-end bg-off-black text-bone">
+      <div className="on-dark relative flex h-[70vh] min-h-[420px] w-full items-end overflow-hidden bg-off-black text-bone">
         {entry.heroImage ? (
           <>
             <Image
@@ -42,7 +42,7 @@ export default async function EditorialEntryPage({
               alt={entry.heroImage.alt}
               fill
               sizes="100vw"
-              className="absolute inset-0 h-full w-full object-cover"
+              className="slow-zoom absolute inset-0 h-full w-full object-cover"
               priority
             />
             <div className="absolute inset-0 bg-gradient-to-t from-off-black/85 via-off-black/10 to-transparent" />
@@ -55,8 +55,15 @@ export default async function EditorialEntryPage({
           />
         )}
         <div className="relative z-10 mx-auto w-full max-w-[1600px] px-4 pb-12 md:px-8">
-          <p className="eyebrow text-soft-grey">{entry.type}</p>
-          <h1 className="mt-2 max-w-[24ch] font-display text-4xl md:text-6xl">{entry.title}</h1>
+          <p className="hero-rise eyebrow text-soft-grey" style={{ animationDelay: "0.1s" }}>
+            {entry.type}
+          </p>
+          <h1
+            className="hero-rise mt-2 max-w-[24ch] font-display text-4xl md:text-6xl"
+            style={{ animationDelay: "0.2s" }}
+          >
+            {entry.title}
+          </h1>
         </div>
       </div>
       <div className="mx-auto max-w-[720px] px-4 py-20">
