@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { auth } from "@/lib/auth/server";
+import { getSessionSafe } from "@/lib/auth/session";
 import { getProfile, listAddresses } from "@/lib/customer/db";
 import { AuthForms } from "@/components/account/AuthForms";
 import { AccountDashboard } from "@/components/account/AccountDashboard";
@@ -8,7 +8,7 @@ export const metadata: Metadata = { title: "Account — AFTER SIN" };
 export const dynamic = "force-dynamic";
 
 export default async function AccountPage() {
-  const { data: session } = await auth.getSession();
+  const { data: session } = await getSessionSafe();
 
   if (!session?.user) {
     return <AuthForms />;

@@ -1,4 +1,4 @@
-import { auth } from "@/lib/auth/server";
+import { getSessionSafe } from "@/lib/auth/session";
 
 /**
  * Neon Auth's managed schema already ships Better Auth's admin plugin
@@ -23,7 +23,7 @@ export type AdminGate =
   | { status: "authorized"; user: AdminUser };
 
 export async function checkAdmin(): Promise<AdminGate> {
-  const { data: session } = await auth.getSession();
+  const { data: session } = await getSessionSafe();
   if (!session?.user) return { status: "unauthenticated" };
 
   const role = (session.user as { role?: string | null }).role ?? "user";
