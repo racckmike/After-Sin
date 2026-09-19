@@ -43,15 +43,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CATEGORY SHOWCASES — reproduces Shihiko's real homepage rhythm
-          (measured live: it repeats a full-bleed category banner once per
-          garment category after the product section). AFTER SIN's real
-          catalog is two categories, so this is two honest showcases with
-          real item counts, not four invented ones. */}
+      {/* CATEGORY SHOWCASES — reproduces Shihiko's real homepage rhythm:
+          four full-bleed banners after the product section (measured
+          live). The first two are real garment categories with real
+          item counts; AFTER SIN's catalog doesn't have four categories
+          yet, so the last two reuse existing AFTER SIN campaign photos
+          with an honest editorial/world label instead of a fabricated
+          category + item count — same structure, no invented products. */}
       <CategoryShowcase
         index={1}
         name="Hoodies"
-        itemCount={1}
+        meta="1 // ITEM"
         href="/product/drop-001-full-zip-hoodie"
         image={{
           src: "/products/drop-001-full-zip-hoodie/oxblood-portrait.jpg",
@@ -61,11 +63,31 @@ export default function Home() {
       <CategoryShowcase
         index={2}
         name="Sweatpants"
-        itemCount={1}
+        meta="1 // ITEM"
         href="/product/drop-001-discipline-sweatpants"
         image={{
           src: "/products/drop-001-discipline-sweatpants/slate-campaign.jpg",
           alt: "AFTER SIN Drop 001 Discipline Sweatpants, Slate colorway, campaign",
+        }}
+      />
+      <CategoryShowcase
+        index={3}
+        name="Drop 001"
+        meta="Consequence"
+        href="/shop"
+        image={{
+          src: "/editorial/drop-001-campaign-hero.jpg",
+          alt: "AFTER SIN Drop 001 — Consequence campaign",
+        }}
+      />
+      <CategoryShowcase
+        index={4}
+        name="After Sin Dark"
+        meta="Drop 001 — Consequence"
+        href="/collections/dark"
+        image={{
+          src: "/products/drop-001-full-zip-hoodie/oxblood-campaign-2.jpg",
+          alt: "AFTER SIN Drop 001 full-zip hoodie, Oxblood colorway, campaign",
         }}
       />
 

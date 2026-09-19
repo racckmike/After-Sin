@@ -7,10 +7,15 @@
   [data-collection] overrides further down, never here.
 */
 :root {
-  --color-off-black: #080808;
+  /* Base neutrals match Shihiko's actual measured UI colors for this
+     fidelity experiment (rgb(3,3,3) text, pure #fff page background —
+     verified via computed style, not AFTER SIN's original warm-bone
+     brand palette). AFTER SIN's identity here comes from the logo,
+     photography and products, not these base tokens. */
+  --color-off-black: #030303;
   --color-washed-black: #111111;
   --color-charcoal: #242424;
-  --color-bone: #f1efe8;
+  --color-bone: #ffffff;
   --color-off-white: #f7f6f2;
   --color-soft-grey: #aaa7a0;
   --color-antique-silver: #8c8982;
