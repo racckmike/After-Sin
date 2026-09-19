@@ -75,18 +75,21 @@ export function Header({ overDarkHero = false }: { overDarkHero?: boolean }) {
                 <Link href={`/collections/${collections[0].slug}`} className="eyebrow transition-opacity hover:opacity-60">
                   Collections
                 </Link>
-                <div className="invisible absolute left-0 top-full pt-3 opacity-0 transition-opacity duration-150 group-hover:visible group-hover:opacity-100">
-                  <div className="flex min-w-[220px] flex-col border border-off-black/15 bg-bone py-2 text-off-black shadow-[0_8px_24px_rgba(0,0,0,0.08)]">
-                    {collections.map((c) => (
+                <div className="invisible absolute left-0 top-full pt-4 opacity-0 transition-[opacity,transform] duration-200 ease-out [transform:translateY(-4px)] group-hover:visible group-hover:opacity-100 group-hover:[transform:translateY(0)]">
+                  <div className="flex w-[340px] flex-col border border-off-black/15 bg-bone text-off-black shadow-[0_16px_40px_rgba(0,0,0,0.1)]">
+                    {collections.map((c, i) => (
                       <Link
                         key={c.slug}
                         href={`/collections/${c.slug}`}
-                        className="flex items-baseline justify-between gap-4 px-4 py-2.5 text-sm transition-opacity hover:opacity-60"
+                        className="group/item flex items-start justify-between gap-4 border-b border-off-black/10 px-5 py-4 transition-opacity last:border-b-0 hover:opacity-60"
                       >
-                        <span>{c.name}</span>
-                        {c.status === "coming-soon" && (
-                          <span className="eyebrow text-[10px] text-charcoal">Soon</span>
-                        )}
+                        <span>
+                          <span className="font-display text-xl leading-none">{c.name}</span>
+                          <span className="mt-1.5 block text-xs text-charcoal">{c.tagline}</span>
+                        </span>
+                        <span className="eyebrow shrink-0 pt-0.5 text-[10px] text-charcoal">
+                          {c.status === "coming-soon" ? "Soon" : `0${i + 1}`}
+                        </span>
                       </Link>
                     ))}
                   </div>
