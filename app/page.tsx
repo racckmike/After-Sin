@@ -1,6 +1,5 @@
 import { Hero } from "@/components/editorial/Hero";
 import { EditorialSection } from "@/components/editorial/EditorialSection";
-import { Newsletter } from "@/components/editorial/Newsletter";
 import { CollectionGateway } from "@/components/editorial/CollectionGateway";
 import { SignatureMark } from "@/components/ui/SignatureMark";
 import { Reveal } from "@/components/ui/Reveal";
@@ -89,8 +88,6 @@ export default function Home() {
           One drop at a time.
         </p>
       </Reveal>
-
-      <Newsletter />
     </>
   );
 }
