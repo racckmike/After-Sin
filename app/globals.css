@@ -120,6 +120,11 @@
 
 html {
   scroll-behavior: smooth;
+  /* Decorative elements (e.g. PdpOrnament) intentionally bleed past
+     their own container's edges — clipping at the root (the element
+     that actually owns viewport scrolling) keeps that bleed from ever
+     producing a page-level horizontal scrollbar. */
+  overflow-x: clip;
 }
 
 body {
@@ -127,6 +132,7 @@ body {
   color: var(--color-off-black);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
 }
 
 ::selection {
