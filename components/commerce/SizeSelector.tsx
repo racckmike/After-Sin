@@ -49,10 +49,10 @@ export function SizeSelector({ sizes, soldOutSizes = [], selected, onSelect, fit
               onClick={() => onSelect(size)}
               className={`relative flex h-11 items-center justify-center border text-sm transition-all duration-150 active:scale-95 ${
                 isSelected
-                  ? "border-off-black bg-off-black text-bone"
+                  ? "border-off-black text-off-black"
                   : soldOut
-                    ? "border-soft-grey/60 text-soft-grey"
-                    : "border-off-black/70 hover:bg-off-black hover:text-bone"
+                    ? "border-[#d6dee7] text-[#d6dee7]"
+                    : "border-[#d6dee7] hover:border-off-black"
               }`}
             >
               {size}
@@ -61,7 +61,7 @@ export function SizeSelector({ sizes, soldOutSizes = [], selected, onSelect, fit
                   aria-hidden
                   className="pointer-events-none absolute inset-0 flex items-center"
                 >
-                  <span className="h-px w-full rotate-[-18deg] bg-soft-grey" />
+                  <span className="h-px w-full rotate-[-18deg] bg-[#d6dee7]" />
                 </span>
               )}
             </button>
