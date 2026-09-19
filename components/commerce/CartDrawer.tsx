@@ -7,6 +7,7 @@ import { useCart, type CartLine } from "@/context/CartContext";
 import { useRegion } from "@/context/RegionContext";
 import { formatAmount, getProductPriceValue } from "@/lib/format";
 import { PlaceholderFrame } from "@/components/ui/PlaceholderFrame";
+import { EditorialButton } from "@/components/ui/EditorialButton";
 
 function lineImage(line: CartLine) {
   return line.product.images.find((img) => img.color === line.color) ?? line.product.images[0];
@@ -145,13 +146,9 @@ export function CartDrawer() {
             <p className="mb-4 text-xs text-charcoal">
               Shipping and taxes calculated at checkout.
             </p>
-            <Link
-              href="/cart"
-              onClick={closeCart}
-              className="flex h-12 w-full items-center justify-center bg-off-black text-sm tracking-[0.08em] text-bone transition-opacity hover:opacity-85"
-            >
+            <EditorialButton href="/cart" onClick={closeCart} className="h-12 w-full">
               VIEW BAG / CHECKOUT
-            </Link>
+            </EditorialButton>
           </div>
         )}
       </aside>
