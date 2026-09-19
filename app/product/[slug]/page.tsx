@@ -50,7 +50,7 @@ export default async function ProductPage({
     >
       <PdpOrnament mark="ring" className="hidden h-40 w-40 -left-16 -top-10 md:block lg:h-48 lg:w-48" />
       <PdpOrnament mark="cross" className="hidden h-28 w-28 -right-10 bottom-24 md:block lg:h-32 lg:w-32" />
-      <div className="grid gap-10 md:grid-cols-[1.5fr_1fr] md:gap-14 lg:grid-cols-[1.7fr_1fr]">
+      <div className="grid gap-6 md:grid-cols-[0.7fr_1fr] md:gap-6">
         <ProductDisplay product={product} />
       </div>
 
