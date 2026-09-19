@@ -231,6 +231,19 @@ body {
       cta-text-out 0.2s ease 0s 1 forwards,
       cta-text-in 0.2s ease 0.2s 1 forwards;
   }
+  /* the optional status line under a button's main label (e.g. "SHIPS
+     FROM TORONTO") — same color logic as .editorial-cta__text, minus
+     the roll animation, so it just crossfades with the fill. */
+  .editorial-cta__subtext {
+    display: block;
+    color: var(--color-bone);
+    opacity: 0.7;
+    transition: color 0.3s ease;
+  }
+  .editorial-cta:hover .editorial-cta__subtext,
+  .editorial-cta:focus-visible .editorial-cta__subtext {
+    color: var(--color-off-black);
+  }
   .editorial-cta__corner {
     position: absolute;
     z-index: 3;
@@ -287,6 +300,13 @@ body {
   }
   .editorial-cta[data-tone="light"]:hover .editorial-cta__text,
   .editorial-cta[data-tone="light"]:focus-visible .editorial-cta__text {
+    color: var(--color-bone);
+  }
+  .editorial-cta[data-tone="light"] .editorial-cta__subtext {
+    color: var(--color-off-black);
+  }
+  .editorial-cta[data-tone="light"]:hover .editorial-cta__subtext,
+  .editorial-cta[data-tone="light"]:focus-visible .editorial-cta__subtext {
     color: var(--color-bone);
   }
   .editorial-cta[data-tone="light"] .editorial-cta__corner {

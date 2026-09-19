@@ -166,7 +166,8 @@ export function ProductInfo({ product, color, onColorChange }: Props) {
               addItem(product, color, size, quantity);
               openCart();
             }}
-            className="h-12 w-full disabled:cursor-not-allowed disabled:opacity-40"
+            subtext={soldOut ? undefined : "Ships From Toronto"}
+            className="h-14 w-full disabled:cursor-not-allowed disabled:opacity-40"
           >
             {soldOut ? "SOLD OUT" : size ? "ADD TO BAG" : "SELECT A SIZE"}
           </EditorialSubmitButton>

@@ -69,15 +69,20 @@ export function EditorialButton({
 export function EditorialSubmitButton({
   className = "",
   tone = "dark",
+  subtext,
   children,
   ...rest
-}: SharedProps & Omit<ComponentPropsWithoutRef<"button">, "className" | "children">) {
+}: SharedProps & { subtext?: ReactNode } & Omit<
+    ComponentPropsWithoutRef<"button">,
+    "className" | "children"
+  >) {
   return (
     <button data-tone={tone} className={`editorial-cta ${className}`} {...rest}>
       <span className="editorial-cta__fill" aria-hidden />
       <CornerMarks />
-      <span className="editorial-cta__label flex h-full w-full items-center justify-center px-7">
+      <span className="editorial-cta__label flex h-full w-full flex-col items-center justify-center gap-0.5 px-7">
         <span className="editorial-cta__text text-sm tracking-[0.08em]">{children}</span>
+        {subtext && <span className="editorial-cta__subtext text-[10px] tracking-[0.08em]">{subtext}</span>}
       </span>
     </button>
   );
