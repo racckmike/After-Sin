@@ -21,14 +21,14 @@ function CardFrame({
 }) {
   if (image.src) {
     return (
-      <div className={`aspect-[4/5] overflow-hidden bg-soft-grey/30 ${className}`}>
+      <div className={`aspect-[3/4] overflow-hidden bg-soft-grey/30 ${className}`}>
         <div className="relative h-full w-full">
           <Image src={image.src} alt={image.alt} fill sizes={sizes} className="object-cover" />
         </div>
       </div>
     );
   }
-  return <PlaceholderFrame label={image.placeholderLabel} ratio="4 / 5" className={className} />;
+  return <PlaceholderFrame label={image.placeholderLabel} ratio="3 / 4" className={className} />;
 }
 
 export function ProductCard({
