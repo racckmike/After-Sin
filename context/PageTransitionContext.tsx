@@ -12,17 +12,22 @@ import {
 import { useRouter, usePathname } from "next/navigation";
 
 /**
- * A short, deliberate cover→reveal moment for entering a new AFTER SIN
- * world/collection — not a generic fade. Reserved for real editorial
- * navigation (Shop Drop, Shop by World, Read the story); transactional
- * actions (Add to Bag, Checkout, form submits) never touch this.
+ * A solid surface rises from the bottom edge, covers the viewport, and
+ * — once the destination page has mounted underneath it — fades away
+ * in place rather than continuing to slide off. The surface's color
+ * matches the destination page's own background, so it's meant to
+ * read as "this panel became the new page," not "a curtain passed
+ * over and revealed something else underneath." Reserved for real
+ * navigation: product cards, Shop Drop, Shop by World, Read the
+ * story; transactional actions (Add to Bag, Checkout, form submits)
+ * never touch this.
  *
- * Real Shihiko SHOP NOW buttons were live-inspected before building
- * this (network + performance.getEntriesByType('navigation') on an
- * actual click, not a screenshot guess): they do a genuine full
- * browser reload with no client-side transition system at all. This
- * is an original AFTER SIN interaction, not a port of anything
- * observed there.
+ * Real Shihiko interactions were live-inspected before building this
+ * (network + performance.getEntriesByType('navigation') on actual
+ * clicks — product cards, quick-add, gallery, cart drawer, "see it in
+ * action" videos — not a screenshot guess): all of it is either a
+ * plain full-page reload or an instant swap, no comparable rising
+ * surface. This is an original AFTER SIN interaction.
  *
  * Navigation itself is never gated on the animation: router.push()
  * fires immediately when covering starts, and a hard failsafe timer
@@ -39,8 +44,8 @@ interface PageTransitionContextValue {
 
 const PageTransitionContext = createContext<PageTransitionContextValue | null>(null);
 
-const COVER_MS = 300;
-const REVEAL_MS = 480;
+const COVER_MS = 500; // matches TransitionOverlay's rise duration
+const REVEAL_MS = 300; // matches TransitionOverlay's in-place fade-out duration
 const FAILSAFE_MS = 2500;
 
 export function PageTransitionProvider({ children }: { children: ReactNode }) {
