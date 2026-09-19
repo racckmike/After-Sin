@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { formatCentavosMXN } from "@/lib/checkout/pricing";
+import { EditorialSubmitButton } from "@/components/ui/EditorialButton";
 
 function inputClass() {
   return "h-12 w-full border border-off-black bg-transparent px-4 text-sm outline-none disabled:opacity-60";
@@ -218,13 +219,13 @@ export default function CheckoutPage() {
 
           {error && <p className="eyebrow text-red-800">{error}</p>}
 
-          <button
+          <EditorialSubmitButton
             type="submit"
             disabled={pending}
-            className="flex h-12 w-full items-center justify-center bg-off-black text-sm tracking-[0.08em] text-bone transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-40"
+            className="h-12 w-full disabled:cursor-not-allowed disabled:opacity-40"
           >
             {pending ? "…" : "CONTINUE TO PAYMENT"}
-          </button>
+          </EditorialSubmitButton>
           <p className="text-xs text-charcoal">
             You&rsquo;ll enter your card details securely on Mercado Pago&rsquo;s payment page.
           </p>

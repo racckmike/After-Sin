@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { EditorialButton } from "@/components/ui/EditorialButton";
 
 export const metadata: Metadata = { title: "Payment Not Completed — AFTER SIN" };
 
@@ -12,12 +12,9 @@ export default function CheckoutFailurePage() {
         Your payment wasn&rsquo;t completed and you haven&rsquo;t been charged. Your bag is still saved — you can try
         again whenever you&rsquo;re ready.
       </p>
-      <Link
-        href="/cart"
-        className="flex h-12 w-full max-w-[280px] items-center justify-center bg-off-black text-sm tracking-[0.08em] text-bone transition-opacity hover:opacity-85"
-      >
+      <EditorialButton href="/cart" className="h-12 w-full max-w-[280px]">
         BACK TO BAG
-      </Link>
+      </EditorialButton>
     </div>
   );
 }
