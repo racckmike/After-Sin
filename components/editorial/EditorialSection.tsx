@@ -1,9 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
 import { PlaceholderFrame } from "@/components/ui/PlaceholderFrame";
-import { useTransitionLinkProps } from "@/context/PageTransitionContext";
+import { ArrowLink } from "@/components/ui/ArrowLink";
 
 export function EditorialSection({
   eyebrow,
@@ -22,7 +21,6 @@ export function EditorialSection({
   reverse?: boolean;
   image?: { src: string; alt: string };
 }) {
-  const transitionProps = useTransitionLinkProps(href);
   return (
     <section className="mx-auto max-w-[1600px] px-4 py-20 md:px-8 md:py-28">
       <div
@@ -45,9 +43,9 @@ export function EditorialSection({
           <p className="eyebrow text-charcoal">{eyebrow}</p>
           <h2 className="mt-4 font-display text-4xl leading-[1.05] md:text-5xl">{title}</h2>
           <p className="mt-5 text-[15px] leading-relaxed text-charcoal">{body}</p>
-          <Link href={href} className="eyebrow mt-7 inline-block underline underline-offset-4" {...transitionProps}>
+          <ArrowLink href={href} tone="light" className="mt-7">
             {linkLabel}
-          </Link>
+          </ArrowLink>
         </div>
       </div>
     </section>

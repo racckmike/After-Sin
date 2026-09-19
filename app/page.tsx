@@ -1,10 +1,10 @@
-import Link from "next/link";
 import { Hero } from "@/components/editorial/Hero";
 import { EditorialSection } from "@/components/editorial/EditorialSection";
 import { Newsletter } from "@/components/editorial/Newsletter";
 import { CollectionGateway } from "@/components/editorial/CollectionGateway";
 import { SignatureMark } from "@/components/ui/SignatureMark";
 import { Reveal } from "@/components/ui/Reveal";
+import { ArrowLink } from "@/components/ui/ArrowLink";
 import { ProductCard } from "@/components/commerce/ProductCard";
 import { collections } from "@/data/collections";
 import { getProductsByCollection } from "@/data/products";
@@ -29,9 +29,9 @@ export default function Home() {
               Explore the Collection
             </h2>
           </div>
-          <Link href="/shop" className="eyebrow underline underline-offset-4">
+          <ArrowLink href="/shop" tone="light">
             Shop All
-          </Link>
+          </ArrowLink>
         </Reveal>
 
         <div className="grid gap-x-6 gap-y-12 sm:grid-cols-2 md:gap-x-10">

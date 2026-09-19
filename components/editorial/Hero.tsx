@@ -1,10 +1,10 @@
-import Link from "next/link";
 import Image from "next/image";
 import { EditorialButton } from "@/components/ui/EditorialButton";
+import { ArrowLink } from "@/components/ui/ArrowLink";
 
 export function Hero() {
   return (
-    <section className="on-dark relative flex h-[92vh] min-h-[560px] w-full items-end overflow-hidden bg-off-black text-bone">
+    <section className="on-dark relative flex h-[100svh] min-h-[640px] w-full items-end overflow-hidden bg-off-black text-bone">
       <Image
         src="/products/drop-001-full-zip-hoodie/duo-campaign.jpg"
         alt="AFTER SIN Drop 001 — Consequence, Ash and Oxblood full-zip hoodies"
@@ -30,9 +30,9 @@ export function Hero() {
           <EditorialButton href="/shop" tone="light" className="h-12">
             SHOP DROP
           </EditorialButton>
-          <Link href="/editorial" className="eyebrow underline underline-offset-4 transition-opacity hover:opacity-60">
+          <ArrowLink href="/editorial" tone="light">
             Discover
-          </Link>
+          </ArrowLink>
         </div>
       </div>
     </section>

@@ -1,6 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Logo } from "@/components/ui/Logo";
 import { CurrencySelector } from "@/components/layout/CurrencySelector";
+import { Reveal } from "@/components/ui/Reveal";
 
 const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
   {
@@ -84,6 +86,20 @@ export function Footer() {
           </div>
         </div>
       </div>
+
+      {/* The final visual moment of the site — the wordmark at a scale
+          no other page reaches, so the site reads as ending deliberately
+          rather than just stopping after the last link. */}
+      <Reveal className="border-t border-white/10 px-4 pb-10 pt-12 md:px-8 md:pb-16 md:pt-16">
+        <Image
+          src="/brand/wordmark-bone.png"
+          alt="AFTER SIN"
+          width={1150}
+          height={582}
+          sizes="(min-width: 1200px) 1200px, 92vw"
+          className="mx-auto h-auto w-full max-w-[1200px] opacity-90"
+        />
+      </Reveal>
     </footer>
   );
 }
