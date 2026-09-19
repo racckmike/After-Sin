@@ -43,16 +43,16 @@ export function CartDrawer() {
         onClick={closeCart}
       />
       <aside
-        className={`absolute inset-y-0 right-0 flex w-full max-w-[420px] flex-col bg-bone transition-transform duration-300 ${
+        className={`on-dark absolute inset-y-0 right-0 flex w-full max-w-[420px] flex-col bg-off-black text-bone transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
         aria-label="Shopping bag"
       >
         <div
-          className="flex items-center justify-between border-b hairline px-6 py-5"
+          className="flex items-center justify-between border-b border-white/10 px-6 py-5"
           style={{ paddingTop: "max(1.25rem, env(safe-area-inset-top, 0px))" }}
         >
-          <h2 className="eyebrow">Bag ({count})</h2>
+          <h2 className="eyebrow">Bag [{String(count).padStart(2, "0")}]</h2>
           <button type="button" onClick={closeCart} aria-label="Close bag" className="text-xl leading-none">
             &times;
           </button>
@@ -60,7 +60,7 @@ export function CartDrawer() {
 
         {lines.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-4 px-6 text-center">
-            <p className="text-sm text-charcoal">Your bag is empty.</p>
+            <p className="text-sm text-soft-grey">Your bag is empty.</p>
             <Link href="/shop" onClick={closeCart} className="eyebrow underline underline-offset-4">
               Continue shopping
             </Link>
@@ -89,7 +89,7 @@ export function CartDrawer() {
                         <p className="font-display text-base leading-tight">
                           {line.product.name}
                         </p>
-                        <p className="text-xs text-charcoal">
+                        <p className="text-xs text-soft-grey">
                           {line.color} · {line.size}
                         </p>
                       </div>
@@ -122,7 +122,7 @@ export function CartDrawer() {
                       <button
                         type="button"
                         onClick={() => removeItem(line.key)}
-                        className="eyebrow text-charcoal underline underline-offset-4"
+                        className="eyebrow text-soft-grey underline underline-offset-4"
                       >
                         Remove
                       </button>
@@ -143,10 +143,10 @@ export function CartDrawer() {
               <span>Subtotal</span>
               <span>{formatAmount(subtotal, region.currency)}</span>
             </div>
-            <p className="mb-4 text-xs text-charcoal">
+            <p className="mb-4 text-xs text-soft-grey">
               Shipping and taxes calculated at checkout.
             </p>
-            <EditorialButton href="/cart" onClick={closeCart} className="h-12 w-full">
+            <EditorialButton href="/cart" onClick={closeCart} tone="light" className="h-12 w-full">
               VIEW BAG / CHECKOUT
             </EditorialButton>
           </div>
