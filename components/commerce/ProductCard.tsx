@@ -70,20 +70,20 @@ export function ProductCard({
       onMouseLeave={() => setHover(false)}
       {...transitionProps}
     >
-      <div
-        className={`relative overflow-hidden transition-transform duration-700 ease-out ${
-          hover ? "scale-[1.03]" : "scale-100"
-        }`}
-      >
+      {/* No hover zoom — verified against Shihiko's real product cards
+          (no scale rule anywhere in their stylesheet for this
+          element); only the secondary-image crossfade is real, at
+          their measured 0.3s. */}
+      <div className="relative overflow-hidden">
         <CardFrame
           image={product.images[0]}
           sizes={imageSizes}
-          className={`transition-opacity duration-500 ${hover ? "opacity-0" : "opacity-100"}`}
+          className={`transition-opacity duration-300 ${hover ? "opacity-0" : "opacity-100"}`}
         />
         <CardFrame
           image={secondaryImage}
           sizes={imageSizes}
-          className={`absolute inset-0 transition-opacity duration-500 ${
+          className={`absolute inset-0 transition-opacity duration-300 ${
             hover ? "opacity-100" : "opacity-0"
           }`}
         />
