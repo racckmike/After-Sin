@@ -4,7 +4,10 @@ import { ArrowLink } from "@/components/ui/ArrowLink";
 
 export function Hero() {
   return (
-    <section className="on-dark relative flex h-[100svh] min-h-[640px] w-full items-end overflow-hidden bg-off-black text-bone">
+    <section
+      id="hero"
+      className="on-dark relative flex h-[100svh] min-h-[640px] w-full items-end overflow-hidden bg-off-black text-bone"
+    >
       <Image
         src="/products/drop-001-full-zip-hoodie/duo-campaign.jpg"
         alt="AFTER SIN Drop 001 — Consequence, Ash and Oxblood full-zip hoodies"

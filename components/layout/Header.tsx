@@ -24,12 +24,23 @@ export function Header({ overDarkHero = false }: { overDarkHero?: boolean }) {
   const { data: session } = authClient.useSession();
   const authed = !!session?.user;
 
+  // The header stays transparent for the full hero — not a fixed scroll
+  // distance — and only turns solid once the hero has scrolled entirely
+  // behind it. An IntersectionObserver watching the hero's own height
+  // (with the header's height subtracted via rootMargin) tracks that
+  // boundary directly, so it stays correct whether the hero is 100svh
+  // or any other height, and costs nothing on every scroll tick the way
+  // a scroll-listener recalculation would.
   useEffect(() => {
     if (!overDarkHero) return;
-    const onScroll = () => setScrolled(window.scrollY > 72);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const hero = document.getElementById("hero");
+    if (!hero) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setScrolled(!entry.isIntersecting),
+      { rootMargin: "-64px 0px 0px 0px", threshold: 0 }
+    );
+    observer.observe(hero);
+    return () => observer.disconnect();
   }, [overDarkHero]);
 
   const solid = !overDarkHero || scrolled;
@@ -38,9 +49,9 @@ export function Header({ overDarkHero = false }: { overDarkHero?: boolean }) {
   return (
     <>
       <header
-        className={`sticky top-0 z-40 w-full transition-colors duration-300 ${
+        className={`sticky top-0 z-40 w-full backdrop-blur-md transition-colors duration-300 ${
           solid
-            ? "bg-bone/95 backdrop-blur border-b hairline text-off-black"
+            ? "bg-bone/95 border-b hairline text-off-black"
             : "bg-transparent border-b border-transparent text-bone"
         }`}
       >
