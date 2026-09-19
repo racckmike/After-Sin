@@ -5,6 +5,7 @@ import { collections, getCollection } from "@/data/collections";
 import { getProductsByCollection } from "@/data/products";
 import { ShopControls } from "@/components/commerce/ShopControls";
 import { PlaceholderFrame } from "@/components/ui/PlaceholderFrame";
+import { CollectionTabs } from "@/components/editorial/CollectionTabs";
 
 const collectionCampaignImage: Record<string, string> = {
   dark: "/products/drop-001-full-zip-hoodie/trio-campaign.jpg",
@@ -43,6 +44,8 @@ export default async function CollectionPage({
 
   return (
     <div data-collection={collection.slug}>
+      <CollectionTabs collections={collections} activeSlug={collection.slug} />
+
       <div className="on-dark relative flex h-[58vh] min-h-[380px] w-full items-end overflow-hidden bg-off-black text-bone">
         {collectionCampaignImage[collection.slug] ? (
           <Image
