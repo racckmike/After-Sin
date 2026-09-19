@@ -47,6 +47,7 @@ export function ProductGallery({ images }: { images: ProductImage[] }) {
   }
 
   const activeImage = images[active] ?? images[0];
+  const goTo = (i: number) => setActive((i + images.length) % images.length);
 
   return (
     <div className="md:grid md:grid-cols-[72px_1fr] md:gap-4">
@@ -68,8 +69,34 @@ export function ProductGallery({ images }: { images: ProductImage[] }) {
       </div>
 
       <div>
-        <div key={activeImage.id} className="hero-rise" style={{ animationDuration: "0.4s" }}>
+        <div key={activeImage.id} className="group/gallery relative hero-rise" style={{ animationDuration: "0.4s" }}>
           <GalleryFrame image={activeImage} ratio="4 / 5" className="w-full" zoomOnHover />
+          {images.length > 1 && (
+            <>
+              <button
+                type="button"
+                onClick={() => goTo(active - 1)}
+                aria-label="Previous image"
+                className="absolute left-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center text-bone opacity-100 transition-opacity duration-200 [text-shadow:0_1px_4px_rgba(0,0,0,0.55)] md:opacity-0 md:group-hover/gallery:opacity-100"
+              >
+                <span aria-hidden className="text-xl leading-none">‹</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => goTo(active + 1)}
+                aria-label="Next image"
+                className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center text-bone opacity-100 transition-opacity duration-200 [text-shadow:0_1px_4px_rgba(0,0,0,0.55)] md:opacity-0 md:group-hover/gallery:opacity-100"
+              >
+                <span aria-hidden className="text-xl leading-none">›</span>
+              </button>
+              <span
+                className="eyebrow absolute bottom-3 left-3 text-bone [text-shadow:0_1px_4px_rgba(0,0,0,0.55)]"
+                aria-hidden
+              >
+                {active + 1} / {images.length}
+              </span>
+            </>
+          )}
         </div>
         <div className="mt-3 flex gap-2 overflow-x-auto md:hidden">
           {images.map((img, i) => (
