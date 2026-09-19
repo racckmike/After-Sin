@@ -42,7 +42,7 @@ export function Footer() {
   const [submitting, setSubmitting] = useState(false);
 
   return (
-    <footer className="border-t hairline bg-bone text-off-black">
+    <footer className="bg-bone text-off-black">
       <div className="mx-auto max-w-[1600px] px-4 pb-10 pt-12 md:px-8 md:pb-14 md:pt-16">
         <div className="flex flex-col gap-10 md:flex-row md:justify-between md:gap-16">
           <div className="max-w-[380px]">
