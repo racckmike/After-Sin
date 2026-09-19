@@ -54,7 +54,7 @@ export function Footer() {
             ) : (
               <>
                 <form
-                  className="mt-6 flex items-stretch border-b border-off-black"
+                  className="mt-6 flex items-stretch border-b border-[#d6dee7] transition-colors focus-within:border-off-black"
                   onSubmit={async (e) => {
                     e.preventDefault();
                     if (!email || submitting) return;

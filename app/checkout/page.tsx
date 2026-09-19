@@ -7,7 +7,7 @@ import { formatCentavosMXN } from "@/lib/checkout/pricing";
 import { EditorialSubmitButton } from "@/components/ui/EditorialButton";
 
 function inputClass() {
-  return "h-12 w-full border border-off-black bg-transparent px-4 text-sm outline-none disabled:opacity-60";
+  return "h-12 w-full border border-[#d6dee7] bg-transparent px-4 text-sm outline-none transition-colors focus:border-off-black disabled:opacity-60";
 }
 
 export default function CheckoutPage() {

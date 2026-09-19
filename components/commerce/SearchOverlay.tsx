@@ -87,7 +87,7 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
         </div>
 
         <form
-          className="mx-6 mt-6 flex items-center gap-4 border-b border-off-black pb-3"
+          className="mx-6 mt-6 flex items-center gap-4 border-b border-[#d6dee7] pb-3 transition-colors focus-within:border-off-black"
           onSubmit={(e) => {
             e.preventDefault();
             commitSearch(query);
