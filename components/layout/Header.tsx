@@ -50,9 +50,7 @@ export function Header({ overDarkHero = false }: { overDarkHero?: boolean }) {
     <>
       <header
         className={`sticky top-0 z-40 w-full backdrop-blur-md transition-colors duration-300 ${
-          solid
-            ? "bg-bone/95 border-b hairline text-off-black"
-            : "bg-transparent border-b border-transparent text-bone"
+          solid ? "bg-bone/95 text-off-black" : "bg-transparent text-bone"
         }`}
       >
         <div className="mx-auto flex h-[74px] max-w-[1600px] items-center justify-between px-4 md:px-8">
@@ -76,18 +74,34 @@ export function Header({ overDarkHero = false }: { overDarkHero?: boolean }) {
                   Collections
                 </Link>
                 <div className="invisible absolute left-0 top-full pt-4 opacity-0 transition-[opacity,transform] duration-200 ease-out [transform:translateY(-4px)] group-hover:visible group-hover:opacity-100 group-hover:[transform:translateY(0)]">
-                  <div className="flex w-[340px] flex-col border border-off-black/15 bg-bone text-off-black shadow-[0_16px_40px_rgba(0,0,0,0.1)]">
+                  {/* Frosted glass, not a solid panel — matches Shihiko's
+                      real mega menu (measured live: backdrop-blur + 10%
+                      white fill, no border, no shadow; only the text
+                      color flips with the header's own tone). */}
+                  <div
+                    className={`flex w-[340px] flex-col bg-white/10 backdrop-blur-2xl ${
+                      solid ? "text-off-black" : "text-bone"
+                    }`}
+                  >
                     {collections.map((c, i) => (
                       <Link
                         key={c.slug}
                         href={`/collections/${c.slug}`}
-                        className="group/item flex items-start justify-between gap-4 border-b border-off-black/10 px-5 py-4 transition-opacity last:border-b-0 hover:opacity-60"
+                        className={`group/item flex items-start justify-between gap-4 border-b px-5 py-4 transition-opacity last:border-b-0 hover:opacity-60 ${
+                          solid ? "border-off-black/10" : "border-bone/15"
+                        }`}
                       >
                         <span>
                           <span className="font-display text-xl leading-none">{c.name}</span>
-                          <span className="mt-1.5 block text-xs text-charcoal">{c.tagline}</span>
+                          <span className={`mt-1.5 block text-xs ${solid ? "text-charcoal" : "text-soft-grey"}`}>
+                            {c.tagline}
+                          </span>
                         </span>
-                        <span className="eyebrow shrink-0 pt-0.5 text-[10px] text-charcoal">
+                        <span
+                          className={`eyebrow shrink-0 pt-0.5 text-[10px] ${
+                            solid ? "text-charcoal" : "text-soft-grey"
+                          }`}
+                        >
                           {c.status === "coming-soon" ? "Soon" : `0${i + 1}`}
                         </span>
                       </Link>

@@ -1,5 +1,6 @@
 import { Hero } from "@/components/editorial/Hero";
 import { EditorialSection } from "@/components/editorial/EditorialSection";
+import { CategoryShowcase } from "@/components/editorial/CategoryShowcase";
 import { CollectionGateway } from "@/components/editorial/CollectionGateway";
 import { SignatureMark } from "@/components/ui/SignatureMark";
 import { Reveal } from "@/components/ui/Reveal";
@@ -41,6 +42,32 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/* CATEGORY SHOWCASES — reproduces Shihiko's real homepage rhythm
+          (measured live: it repeats a full-bleed category banner once per
+          garment category after the product section). AFTER SIN's real
+          catalog is two categories, so this is two honest showcases with
+          real item counts, not four invented ones. */}
+      <CategoryShowcase
+        index={1}
+        name="Hoodies"
+        itemCount={1}
+        href="/product/drop-001-full-zip-hoodie"
+        image={{
+          src: "/products/drop-001-full-zip-hoodie/oxblood-portrait.jpg",
+          alt: "AFTER SIN Drop 001 full-zip hoodie, Oxblood colorway, hood portrait",
+        }}
+      />
+      <CategoryShowcase
+        index={2}
+        name="Sweatpants"
+        itemCount={1}
+        href="/product/drop-001-discipline-sweatpants"
+        image={{
+          src: "/products/drop-001-discipline-sweatpants/slate-campaign.jpg",
+          alt: "AFTER SIN Drop 001 Discipline Sweatpants, Slate colorway, campaign",
+        }}
+      />
 
       {/* SHOP BY WORLD — the signature AFTER SIN feature: given room to
           feel cinematic, with a real display heading instead of a label. */}
