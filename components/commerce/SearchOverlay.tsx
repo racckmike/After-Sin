@@ -69,12 +69,10 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
       className={`fixed inset-0 z-50 ${open ? "pointer-events-auto" : "pointer-events-none"}`}
       aria-hidden={!open}
     >
-      <div
-        className={`absolute inset-0 bg-off-black/40 transition-opacity duration-300 ${
-          open ? "opacity-100" : "opacity-0"
-        }`}
-        onClick={onClose}
-      />
+      {/* An invisible click-catcher, not a dimmed backdrop — verified
+          live on Shihiko's real search panel: its own overflow/
+          backdrop element has opacity 0, unlike the cart's 50% dim. */}
+      <div className="absolute inset-0" onClick={onClose} />
       <div
         className={`absolute inset-y-0 right-0 flex w-full max-w-[420px] flex-col overflow-y-auto bg-bone transition-transform duration-300 ${
           open ? "translate-x-0" : "translate-x-full"
