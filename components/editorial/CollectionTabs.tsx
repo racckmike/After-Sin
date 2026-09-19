@@ -30,7 +30,7 @@ export function CollectionTabs({ collections, activeSlug }: { collections: Colle
   return (
     <nav
       aria-label="Switch world"
-      className="sticky top-16 z-30 flex justify-center gap-8 border-b hairline bg-bone/95 px-4 py-3 backdrop-blur-md md:gap-10 md:px-8"
+      className="sticky top-[74px] z-30 flex justify-center gap-8 border-b hairline bg-bone/95 px-4 py-3 backdrop-blur-md md:gap-10 md:px-8"
     >
       {collections.map((c) => (
         <CollectionTab key={c.slug} collection={c} active={c.slug === activeSlug} />

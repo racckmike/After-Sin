@@ -37,7 +37,7 @@ export function Header({ overDarkHero = false }: { overDarkHero?: boolean }) {
     if (!hero) return;
     const observer = new IntersectionObserver(
       ([entry]) => setScrolled(!entry.isIntersecting),
-      { rootMargin: "-64px 0px 0px 0px", threshold: 0 }
+      { rootMargin: "-74px 0px 0px 0px", threshold: 0 }
     );
     observer.observe(hero);
     return () => observer.disconnect();
@@ -55,7 +55,7 @@ export function Header({ overDarkHero = false }: { overDarkHero?: boolean }) {
             : "bg-transparent border-b border-transparent text-bone"
         }`}
       >
-        <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-4 md:px-8">
+        <div className="mx-auto flex h-[74px] max-w-[1600px] items-center justify-between px-4 md:px-8">
           <div className="flex items-center gap-8">
             <button
               type="button"

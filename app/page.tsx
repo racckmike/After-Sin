@@ -25,7 +25,7 @@ export default function Home() {
         <Reveal className="mb-12 flex flex-col gap-4 border-b hairline pb-6 md:mb-16 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="eyebrow text-charcoal">Drop 001 — Consequence</p>
-            <h2 className="mt-3 font-display text-[11vw] leading-[0.95] md:text-6xl lg:text-7xl">
+            <h2 className="mt-3 font-display text-2xl uppercase leading-[1.05] tracking-tight md:text-4xl lg:text-[43px]">
               Explore the Collection
             </h2>
           </div>
@@ -49,7 +49,7 @@ export default function Home() {
         <div className="mx-auto max-w-[1600px]">
           <Reveal className="mb-12 flex flex-col items-center gap-4 text-center md:mb-16">
             <SignatureMark size={20} />
-            <h2 className="font-display text-4xl md:text-6xl">Shop by World</h2>
+            <h2 className="font-display text-2xl uppercase tracking-tight md:text-4xl lg:text-[43px]">Shop by World</h2>
             <p className="max-w-[46ch] text-sm text-charcoal">
               Every AFTER SIN world shares one standard of construction — and its own visual language.
             </p>

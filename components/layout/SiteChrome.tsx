@@ -15,9 +15,10 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
       <AnnouncementBar />
       <Header overDarkHero={overDarkHero} />
       {/* On the homepage the header is transparent over the hero, so the hero
-          is pulled up underneath the header's flow height (h-16) to remove
-          the light body-background gap that otherwise shows through. */}
-      <main id="main" className={overDarkHero ? "-mt-16" : undefined}>
+          is pulled up underneath the header's flow height (74px, matching
+          Shihiko's measured header height) to remove the light
+          body-background gap that otherwise shows through. */}
+      <main id="main" className={overDarkHero ? "-mt-[74px]" : undefined}>
         {children}
       </main>
       <Footer />

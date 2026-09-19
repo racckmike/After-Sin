@@ -6,7 +6,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="on-dark relative flex h-[100svh] min-h-[640px] w-full items-end overflow-hidden bg-off-black text-bone"
+      className="on-dark relative flex h-[90vh] min-h-[560px] w-full items-end overflow-hidden bg-off-black text-bone"
     >
       <Image
         src="/products/drop-001-full-zip-hoodie/duo-campaign.jpg"
@@ -22,7 +22,7 @@ export function Hero() {
           Drop 001 — Consequence
         </p>
         <h1
-          className="hero-rise mt-3 max-w-[16ch] font-display text-[14vw] leading-[0.92] md:text-[6.4vw]"
+          className="hero-rise mt-3 max-w-[16ch] font-display text-2xl leading-[1.05] md:text-[32px]"
           style={{ animationDelay: "0.2s" }}
         >
           The First
