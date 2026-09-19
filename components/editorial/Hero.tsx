@@ -17,17 +17,15 @@ export function Hero() {
         className="slow-zoom absolute inset-0 h-full w-full object-cover object-top"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-off-black/90 via-off-black/20 to-transparent" />
-      <div className="relative z-10 mx-auto w-full max-w-[1600px] px-4 pb-14 md:px-8 md:pb-20">
+      <div className="relative z-10 mx-auto flex w-full max-w-[1600px] flex-col items-center px-4 pb-14 text-center md:px-8 md:pb-20">
         <p className="hero-rise eyebrow text-soft-grey" style={{ animationDelay: "0.1s" }}>
           Drop 001 — Consequence
         </p>
         <h1
-          className="hero-rise mt-3 max-w-[16ch] font-display text-2xl leading-[1.05] md:text-[32px]"
+          className="hero-rise mt-3 font-display text-2xl leading-[1.05] md:text-[32px]"
           style={{ animationDelay: "0.2s" }}
         >
-          The First
-          <br />
-          Consequence
+          The First Consequence
         </h1>
         <div className="hero-rise mt-8 flex items-center gap-6" style={{ animationDelay: "0.4s" }}>
           <EditorialButton href="/shop" tone="light" className="h-12">

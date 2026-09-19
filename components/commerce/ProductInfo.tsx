@@ -100,7 +100,16 @@ export function ProductInfo({ product, color, onColorChange }: Props) {
         </div>
       )}
 
-      <div className="mt-7">
+      {/* Pinned to the bottom of the viewport on mobile so the primary
+          action stays reachable while browsing the gallery/accordions
+          below — matches Shihiko's real mobile PDP (verified live: its
+          ADD TO CART bar stays fixed at the screen bottom through the
+          whole page scroll, not just sticky within the info column).
+          Desktop keeps the button in normal flow. */}
+      <div
+        className="fixed inset-x-0 bottom-0 z-30 border-t hairline bg-bone px-4 py-3 md:static md:z-auto md:mt-7 md:border-0 md:bg-transparent md:px-0 md:py-0 md:pb-0"
+        style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom, 0px))" }}
+      >
         {comingSoon ? (
           notified ? (
             <p className="eyebrow flex h-12 items-center justify-center border border-off-black">

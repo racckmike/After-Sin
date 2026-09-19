@@ -46,7 +46,7 @@ export default async function ProductPage({
   return (
     <div
       data-collection={product.collectionSlug}
-      className="relative mx-auto max-w-[1600px] overflow-hidden px-4 py-10 md:overflow-visible md:px-8 md:py-14"
+      className="relative mx-auto max-w-[1600px] overflow-hidden px-4 py-10 pb-28 md:overflow-visible md:px-8 md:py-14"
     >
       <PdpOrnament mark="ring" className="hidden h-40 w-40 -left-16 -top-10 md:block lg:h-48 lg:w-48" />
       <PdpOrnament mark="cross" className="hidden h-28 w-28 -right-10 bottom-24 md:block lg:h-32 lg:w-32" />
