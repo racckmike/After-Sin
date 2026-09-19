@@ -1,8 +1,11 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import { SignatureMark } from "@/components/ui/SignatureMark";
 
+/** Matches Shihiko's measured accordion timing exactly: 700ms,
+    cubic-bezier(0.4, 0, 0.2, 1) — Material's standard easing curve,
+    not a proprietary asset. Its indicator is a plain +/− glyph, not a
+    branded icon, so that's what this uses too. */
 export function Accordion({ items }: { items: { title: string; content: ReactNode }[] }) {
   const [open, setOpen] = useState<number | null>(null);
   return (
@@ -18,14 +21,12 @@ export function Accordion({ items }: { items: { title: string; content: ReactNod
               className="flex w-full items-center justify-between py-4 text-left"
             >
               <span className="eyebrow">{item.title}</span>
-              <span
-                className={`transition-transform duration-300 ${expanded ? "rotate-45" : ""}`}
-              >
-                <SignatureMark size={11} className="opacity-70" />
+              <span aria-hidden className="w-3 text-center text-base leading-none">
+                {expanded ? "−" : "+"}
               </span>
             </button>
             <div
-              className={`grid overflow-hidden transition-[grid-template-rows] duration-300 ${
+              className={`grid overflow-hidden transition-[grid-template-rows] duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] ${
                 expanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
               }`}
             >
