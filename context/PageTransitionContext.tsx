@@ -29,10 +29,12 @@ import { useRouter, usePathname } from "next/navigation";
  * force-resets state if a route change never lands — see `reset`.
  */
 export type TransitionPhase = "idle" | "covering" | "waiting" | "revealing";
+export type TransitionTone = "dark" | "light";
 
 interface PageTransitionContextValue {
   phase: TransitionPhase;
-  navigate: (href: string) => void;
+  tone: TransitionTone;
+  navigate: (href: string, tone?: TransitionTone) => void;
 }
 
 const PageTransitionContext = createContext<PageTransitionContextValue | null>(null);
@@ -45,6 +47,7 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const [phase, setPhase] = useState<TransitionPhase>("idle");
+  const [tone, setTone] = useState<TransitionTone>("dark");
 
   const targetPathname = useRef<string | null>(null);
   const coverDone = useRef(false);
@@ -135,7 +138,7 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
   }, [pathname, maybeReveal]);
 
   const navigate = useCallback(
-    (href: string) => {
+    (href: string, requestedTone: TransitionTone = "dark") => {
       if (phase !== "idle") return; // a transition is already in flight — ignore re-entrant clicks
 
       const reduced =
@@ -161,6 +164,7 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
       coverDone.current = false;
       routeReady.current = false;
       document.documentElement.style.overflowAnchor = "none";
+      setTone(requestedTone);
       startPinning();
       setPhase("covering");
       router.push(href);
@@ -184,7 +188,7 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
   }, [clearTimers, stopPinning]);
 
   return (
-    <PageTransitionContext.Provider value={{ phase, navigate }}>
+    <PageTransitionContext.Provider value={{ phase, tone, navigate }}>
       {children}
     </PageTransitionContext.Provider>
   );
@@ -198,15 +202,18 @@ export function usePageTransition() {
 
 /** Spread onto any internal `<Link>` to route its click through the
     transition — preserves modifier-clicks, middle-click, and right-click
-    (only a genuine plain left click is intercepted). */
-export function useTransitionLinkProps(href: string) {
+    (only a genuine plain left click is intercepted). `tone` picks the
+    overlay color: "dark" (default) for CTAs over photography/dark
+    sections, "light" for product cards on the bone-background shop grid
+    landing on the PDP's own light background. */
+export function useTransitionLinkProps(href: string, tone: TransitionTone = "dark") {
   const { navigate } = usePageTransition();
   return {
     onClick: (e: React.MouseEvent) => {
       if (e.defaultPrevented || e.button !== 0) return;
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       e.preventDefault();
-      navigate(href);
+      navigate(href, tone);
     },
   };
 }

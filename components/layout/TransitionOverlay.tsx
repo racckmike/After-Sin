@@ -12,7 +12,7 @@ import { SignatureMark } from "@/components/ui/SignatureMark";
  * stuck state (however unlikely) can never trap the user.
  */
 export function TransitionOverlay() {
-  const { phase } = usePageTransition();
+  const { phase, tone } = usePageTransition();
 
   const stateClass =
     phase === "covering"
@@ -24,14 +24,15 @@ export function TransitionOverlay() {
           : "translate-y-full transition-none";
 
   const markVisible = phase === "covering" || phase === "waiting";
+  const isLight = tone === "light";
 
   return (
     <div
       aria-hidden
-      className={`pointer-events-none fixed inset-0 z-[90] flex items-center justify-center bg-off-black ${stateClass}`}
+      className={`pointer-events-none fixed inset-0 z-[90] flex items-center justify-center ${isLight ? "bg-bone" : "bg-off-black"} ${stateClass}`}
     >
       <div className={`transition-opacity duration-300 ${markVisible ? "opacity-100 delay-150" : "opacity-0"}`}>
-        <SignatureMark tone="dark" size={28} />
+        <SignatureMark tone={isLight ? "light" : "dark"} size={28} />
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ import { PlaceholderFrame } from "@/components/ui/PlaceholderFrame";
 import { StatusBadge } from "@/components/commerce/StatusBadge";
 import { useRegion } from "@/context/RegionContext";
 import { getProductPrice } from "@/lib/format";
+import { useTransitionLinkProps } from "@/context/PageTransitionContext";
 
 function CardFrame({
   image,
@@ -54,13 +55,20 @@ export function ProductCard({
     product.status === "low-stock" ||
     product.status === "sold-out" ||
     (product.status === "coming-soon" && priceIsLocked);
+  const href = `/product/${product.slug}`;
+  // Light tone: the PDP itself lands on a bone background, so the
+  // reveal reads as "the garment's own page rising into place" rather
+  // than a dark interruption — distinct from the dark tone used for
+  // editorial CTAs over photography.
+  const transitionProps = useTransitionLinkProps(href, "light");
 
   return (
     <Link
-      href={`/product/${product.slug}`}
+      href={href}
       className="group flex flex-col"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      {...transitionProps}
     >
       <div
         className={`relative overflow-hidden transition-transform duration-700 ease-out ${
